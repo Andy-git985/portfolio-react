@@ -7,10 +7,11 @@ import UploadForm from './components/UploadForm';
 // import postService from './services/posts';
 
 const App = () => {
+  // const [posts, setPosts] = useState([]);
   const [posts, postService] = useResource('/api/posts');
 
   const addPost = (postObject) => {
-    // old code here
+    // old code here - was async function before
     // try {
     //   const returnedPost = await postService.createNew(postObject);
     //   setPosts(posts.concat(returnedPost));
