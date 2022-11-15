@@ -1,0 +1,52 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.menu {
+  outline: 1px solid black;
+  padding: 4rem;
+}
+
+.images {
+  padding: 0.5em;
+  display: grid;
+  grid-auto-flow: dense;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 0.5em;
+  outline: 1px solid red;
+}
+
+img {
+  display: block;
+  object-fit: cover;
+  object-position: center center;
+  width: 100%;
+  height: 100%;
+}
+
+.options {
+  transform: translateY(0%);
+}
+
+@media (min-width: 801px) {
+  .menu {
+    height: 100vh;
+    width: 30%;
+    position: fixed;
+  }
+  .images {
+    margin-left: 30%;
+  }
+}
+
+@media (min-width: 1465px) {
+  .images {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
