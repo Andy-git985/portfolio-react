@@ -13,6 +13,7 @@ postsRouter.post('/', upload.single('file'), async (request, response) => {
   const post = new Post({
     title: request.body.title,
     image: result.secure_url,
+    project: request.body.project,
     cloudinaryId: result.public_id,
     createdAt: new Date(),
   });

@@ -1,18 +1,18 @@
-const Post = ({ post }) => {
+const Image = ({ image }) => {
   return (
     <div>
-      <img src={post.image} alt={'description'} />
+      <img src={image.image} alt="" />
     </div>
   );
 };
 
-const Images = ({ posts }) => {
+const Images = ({ images }) => {
   return (
     <div className="images">
-      {posts
+      {images
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .map((post) => (
-          <Post key={post.id} post={post} />
+        .map((image) => (
+          <Image key={image.id} image={image} />
         ))}
     </div>
   );

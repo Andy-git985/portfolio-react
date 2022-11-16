@@ -1,25 +1,22 @@
-import { useState, useEffect } from 'react';
+import { Routes, Route, useMatch } from 'react-router-dom';
 import { useResource } from './hooks';
 
 import Menu from './components/Menu';
 import Images from './components/Images';
 import UploadForm from './components/UploadForm';
-// import postService from './services/posts';
 
 const App = () => {
-  // const [posts, setPosts] = useState([]);
   const [posts, postService] = useResource('/api/posts');
 
   const addPost = (postObject) => {
-    // old code here - was async function before
-    // try {
-    //   const returnedPost = await postService.createNew(postObject);
-    //   setPosts(posts.concat(returnedPost));
-    // } catch (error) {
-    //   console.error(error);
-    // }
     postService.create(postObject);
   };
+
+  const match = useMatch('/:project');
+
+  const images = match
+    ? posts.filter((p) => p.project === match.params.project)
+    : posts;
 
   return (
     <>
@@ -27,7 +24,10 @@ const App = () => {
         <Menu />
         <UploadForm createPost={addPost} />
       </div>
-      <Images posts={posts} />
+      <Routes>
+        <Route path="/" element={<Images images={images} />} />
+        <Route path="/:project" element={<Images images={images} />} />
+      </Routes>
     </>
   );
 };
