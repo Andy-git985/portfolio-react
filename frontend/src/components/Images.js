@@ -9,9 +9,11 @@ const Post = ({ post }) => {
 const Images = ({ posts }) => {
   return (
     <div className="images">
-      {posts.map((post) => (
-        <Post key={post.id} post={post} />
-      ))}
+      {posts
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .map((post) => (
+          <Post key={post.id} post={post} />
+        ))}
     </div>
   );
 };
