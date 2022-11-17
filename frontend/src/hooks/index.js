@@ -35,8 +35,16 @@ export const useResource = (baseUrl) => {
     return response.data;
   };
 
+  const remove = async (id) => {
+    const response = axios.delete(`${baseUrl}/${id}`);
+    const changedResources = resources.filter((resource) => resource.id !== id);
+    setResources(changedResources);
+    return response.status;
+  };
+
   const service = {
     create,
+    remove,
   };
 
   return [resources, service];

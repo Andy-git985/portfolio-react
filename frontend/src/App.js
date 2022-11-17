@@ -1,4 +1,4 @@
-import { Routes, Route, useMatch } from 'react-router-dom';
+import { Routes, Route, useMatch, useNavigate } from 'react-router-dom';
 import { useResource } from './hooks';
 
 import Menu from './components/Menu';
@@ -7,16 +7,29 @@ import UploadForm from './components/UploadForm';
 
 const App = () => {
   const [posts, postService] = useResource('/api/posts');
+  const navigate = useNavigate();
 
   const addPost = (postObject) => {
     postService.create(postObject);
   };
 
-  const match = useMatch('/:project');
+  const removePost = (id) => {
+    postService.remove(id);
+    navigate('/');
+  };
 
-  const images = match
-    ? posts.filter((p) => p.project === match.params.project)
+  const projectMatch = useMatch('/projects/:project');
+  const postMatch = useMatch('/:id');
+
+  const images = projectMatch
+    ? posts.filter((p) => p.project === projectMatch.params.project)
     : posts;
+
+  const image = postMatch
+    ? posts.filter((p) => p.id === postMatch.params.id)
+    : posts;
+
+  console.log('images', images);
 
   return (
     <>
@@ -26,7 +39,11 @@ const App = () => {
       </div>
       <Routes>
         <Route path="/" element={<Images images={images} />} />
-        <Route path="/:project" element={<Images images={images} />} />
+        <Route
+          path="/:id"
+          element={<Images images={image} removeImage={removePost} />}
+        />
+        <Route path="/projects/:project" element={<Images images={images} />} />
       </Routes>
     </>
   );

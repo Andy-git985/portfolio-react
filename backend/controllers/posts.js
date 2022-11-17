@@ -21,4 +21,10 @@ postsRouter.post('/', upload.single('file'), async (request, response) => {
   response.status(201).json(savedPost);
 });
 
+postsRouter.delete('/:id', async (request, response) => {
+  const post = await Post.findByIdAndRemove(request.params.id);
+  await cloudinary.uploader.destroy(post.cloudinaryId);
+  response.status(204).end();
+});
+
 module.exports = postsRouter;

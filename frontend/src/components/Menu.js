@@ -9,10 +9,10 @@ const Menu = () => {
         </Link>
       </div>
       <div className="options">
-        <Link to="/editorial">
+        <Link to="/projects/editorial">
           <div>editorial</div>
         </Link>
-        <Link to="/advertising">
+        <Link to="/projects/advertising">
           <div>advertising</div>
         </Link>
         <div>video</div>
