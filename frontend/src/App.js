@@ -29,10 +29,8 @@ const App = () => {
     ? posts.filter((p) => p.id === postMatch.params.id)
     : posts;
 
-  console.log('images', images);
-
   return (
-    <>
+    <div className="flex">
       <div className="menu">
         <Menu />
         <UploadForm createPost={addPost} />
@@ -45,7 +43,7 @@ const App = () => {
         />
         <Route path="/projects/:project" element={<Images images={images} />} />
       </Routes>
-    </>
+    </div>
   );
 };
 

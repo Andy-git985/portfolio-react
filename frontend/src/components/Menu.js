@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom';
+import DrawerMenu from './DrawerMenu';
 
 const Menu = () => {
   return (
     <>
       <div>
-        <Link to="/">
-          <h1>Name</h1>
+        <Link to="/" className="flex-menu">
+          <div>
+            <h1>Name</h1>
+          </div>
+          <div className="menu-btn">
+            <DrawerMenu />
+          </div>
         </Link>
       </div>
       <div className="options">
