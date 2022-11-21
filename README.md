@@ -12,6 +12,8 @@
   - CLOUD_NAME = `your cloudinary cloud name`
   - API_KEY = `your cloudinary api key`
   - API_SECRET = `your cloudinary api secret`
+  - GOOGLE_CLIENT_ID = `your google oauth client secret`
+  - GOOGLE_CLIENT_SECRET = `your google oauth client secret`
 
 ---
 
