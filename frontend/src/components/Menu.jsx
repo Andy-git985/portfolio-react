@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import DrawerMenu from './DrawerMenu';
+import LoginButton from './LoginButton';
 
 const Menu = () => {
   return (
@@ -24,6 +25,7 @@ const Menu = () => {
         <div>video</div>
         <div>photo diary</div>
         <div>contact</div>
+        <LoginButton />
       </div>
     </>
   );

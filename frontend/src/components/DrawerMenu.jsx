@@ -11,13 +11,13 @@ const data = [
   { name: 'ADVERTISING', route: '/projects/advertising' },
 ];
 
+const Menu = styled.div`
+  background-color: yellow;
+  padding: 1em;
+`;
+
 const DrawerMenu = () => {
   const [open, setOpen] = useState(false);
-
-  const Menu = styled.div`
-    background-color: yellow;
-    padding: 1em;
-  `;
 
   const getList = () => (
     <Menu onClick={() => setOpen(false)}>
