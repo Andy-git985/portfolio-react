@@ -5,7 +5,7 @@ import Menu from '../components/Menu';
 import Images from '../components/Images';
 import UploadForm from '../components/UploadForm';
 
-const Home = () => {
+const Home = ({ user }) => {
   const [posts, postService] = useResource('/api/posts');
   const navigate = useNavigate();
 
@@ -32,17 +32,22 @@ const Home = () => {
   return (
     <div className="flex">
       <div className="menu">
-        <Menu />
-        <UploadForm createPost={addPost} />
+        <Menu user={user} />
+        {user && <UploadForm createPost={addPost} />}
       </div>
-      <Routes>
-        <Route path="/" element={<Images images={images} />} />
-        <Route
-          path="/:id"
-          element={<Images images={image} removeImage={removePost} />}
-        />
-        <Route path="/projects/:project" element={<Images images={images} />} />
-      </Routes>
+      <div>
+        <Routes>
+          <Route path="/" element={<Images images={images} />} />
+          <Route
+            path="/:id"
+            element={<Images images={image} removeImage={removePost} />}
+          />
+          <Route
+            path="/projects/:project"
+            element={<Images images={images} />}
+          />
+        </Routes>
+      </div>
     </div>
   );
 };

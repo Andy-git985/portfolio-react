@@ -20,9 +20,15 @@ authRouter.get('/login/failed', (request, response) => {
   });
 });
 
-authRouter.get('/logout', (request, response) => {
-  request.logout();
-  response.redirect(config.CLIENT_URL);
+authRouter.get('/logout', (request, response, next) => {
+  request.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    response.redirect(config.CLIENT_URL);
+  });
+  // request.logout();
+  // response.redirect(config.CLIENT_URL);
 });
 
 authRouter.get(

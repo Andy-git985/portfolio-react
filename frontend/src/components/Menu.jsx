@@ -1,8 +1,16 @@
 import { Link } from 'react-router-dom';
 import DrawerMenu from './DrawerMenu';
 import LoginButton from './LoginButton';
+import styled from 'styled-components';
 
-const Menu = () => {
+const Logout = styled.div`
+  cursor: pointer;
+`;
+
+const Menu = ({ user }) => {
+  const logout = () => {
+    window.open('http://localhost:3001/auth/logout', '_self');
+  };
   return (
     <>
       <div>
@@ -25,7 +33,7 @@ const Menu = () => {
         <div>video</div>
         <div>photo diary</div>
         <div>contact</div>
-        <LoginButton />
+        {user ? <Logout onClick={logout}>Logout</Logout> : <LoginButton />}
       </div>
     </>
   );

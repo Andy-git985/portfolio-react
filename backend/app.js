@@ -33,7 +33,14 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
+// app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true,
+  })
+);
 app.use(express.static('build'));
 app.use(express.json());
 app.use(middleware.requestLogger);
