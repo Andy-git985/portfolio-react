@@ -35,19 +35,14 @@ const Home = ({ user }) => {
         <Menu user={user} />
         {user && <UploadForm createPost={addPost} />}
       </div>
-      <div>
-        <Routes>
-          <Route path="/" element={<Images images={images} />} />
-          <Route
-            path="/:id"
-            element={<Images images={image} removeImage={removePost} />}
-          />
-          <Route
-            path="/projects/:project"
-            element={<Images images={images} />}
-          />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Images images={images} />} />
+        <Route
+          path="/:id"
+          element={<Images images={image} removeImage={removePost} />}
+        />
+        <Route path="/projects/:project" element={<Images images={images} />} />
+      </Routes>
     </div>
   );
 };
