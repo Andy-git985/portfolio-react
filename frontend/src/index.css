@@ -42,6 +42,10 @@ img {
   display: none;
 }
 
+.masonry {
+  column-count: 1 !important;
+}
+
 @media (min-width: 801px) {
   .flex {
     display: flex;
@@ -65,5 +69,16 @@ img {
 @media (min-width: 1465px) {
   .images {
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  }
+}
+
+@media (min-width: 1465px) {
+  .masonry {
+    column-count: 2 !important;
+  }
+}
+@media (min-width: 1965px) {
+  .masonry {
+    column-count: 3 !important;
   }
 }

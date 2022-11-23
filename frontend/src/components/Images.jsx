@@ -20,7 +20,7 @@ const Images = ({ images, removeImage }) => {
   return (
     <>
       {images.length > 1 ? (
-        <ImageList className="images" variant="masonry" gap={8}>
+        <ImageList className="images masonry" variant="masonry" gap={8}>
           {images
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .map((image) => (
