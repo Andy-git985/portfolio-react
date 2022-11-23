@@ -8,6 +8,11 @@ postsRouter.get('/', async (request, response) => {
   response.json(posts);
 });
 
+postsRouter.get('/edit', async (request, response) => {
+  const posts = await Post.find({}).sort({ createdAt: -1 });
+  response.json(posts);
+});
+
 postsRouter.post('/', upload.single('file'), async (request, response) => {
   const result = await cloudinary.uploader.upload(request.file.path);
   const post = new Post({

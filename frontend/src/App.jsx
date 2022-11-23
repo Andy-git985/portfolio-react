@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import Edit from './pages/Edit';
 
 const App = () => {
   const [user, setUser] = useState(false);
@@ -34,6 +35,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/*" element={<Home user={user} />} />
+        <Route path="/edit" element={<Edit />} />
       </Routes>
     </BrowserRouter>
   );

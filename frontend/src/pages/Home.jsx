@@ -1,4 +1,4 @@
-import { Routes, Route, useMatch, useNavigate } from 'react-router-dom';
+import { Routes, Route, useMatch, useNavigate, Link } from 'react-router-dom';
 import { useResource } from '../hooks';
 
 import Menu from '../components/Menu';
@@ -18,6 +18,7 @@ const Home = ({ user }) => {
     navigate('/');
   };
 
+  const projectsLink = 'projects';
   const projectMatch = useMatch('/projects/:project');
   const postMatch = useMatch('/:id');
 
@@ -32,8 +33,11 @@ const Home = ({ user }) => {
   return (
     <div className="flex">
       <div className="menu">
-        <Menu user={user} />
+        <Menu link={projectsLink} user={user} />
         {user && <UploadForm createPost={addPost} />}
+        <Link to="/edit">
+          <div>Edit</div>
+        </Link>
       </div>
       <Routes>
         <Route path="/" element={<Images images={images} />} />

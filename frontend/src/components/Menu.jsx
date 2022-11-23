@@ -7,7 +7,7 @@ const Logout = styled.div`
   cursor: pointer;
 `;
 
-const Menu = ({ user }) => {
+const Menu = ({ link, user }) => {
   const logout = () => {
     window.open('http://localhost:3001/auth/logout', '_self');
   };
@@ -24,10 +24,10 @@ const Menu = ({ user }) => {
         </div>
       </div>
       <div className="options">
-        <Link to="/projects/editorial">
+        <Link to={`/${link}/editorial`}>
           <div>editorial</div>
         </Link>
-        <Link to="/projects/advertising">
+        <Link to={`/${link}/advertising`}>
           <div>advertising</div>
         </Link>
         <div>video</div>
