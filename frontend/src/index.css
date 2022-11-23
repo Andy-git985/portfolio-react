@@ -1,36 +1,87 @@
+/* Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/ */
+*/ *,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
 html,
 body {
   height: 100%;
-  width: 100%;
-  font-family: 'Source Code Pro';
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+#root,
+#__next {
+  isolation: isolate;
 }
 
-* {
-  box-sizing: border-box;
+/* == Mines == */
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+html,
+body {
+  font-family: 'Source Code Pro';
 }
 
 .flex-menu {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  outline: 1px solid green;
 }
 
 .menu {
   outline: 1px solid black;
-  padding: 4rem;
+  padding: 1rem 1.5rem;
 }
 
 .images {
-  padding: 0.5em;
+  /* padding: 0.5em;
   display: grid;
   grid-auto-flow: dense;
   grid-template-columns: repeat(1, 1fr);
-  gap: 0.5em;
+  gap: 0.5em; */
   outline: 1px solid red;
+  padding: 0.5em !important;
 }
 
 img {
-  display: block;
   object-fit: cover;
   object-position: center center;
   width: 100%;
@@ -63,16 +114,17 @@ img {
   }
   .images {
     margin-left: 30%;
+    padding: 0.5em !important;
   }
 }
 
-@media (min-width: 1465px) {
+/* @media (min-width: 1465px) {
   .images {
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
   }
-}
+} */
 
-@media (min-width: 1465px) {
+@media (min-width: 1200px) {
   .masonry {
     column-count: 2 !important;
   }

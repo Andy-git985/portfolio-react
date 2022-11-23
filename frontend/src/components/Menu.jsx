@@ -13,15 +13,15 @@ const Menu = ({ user }) => {
   };
   return (
     <>
-      <div>
-        <Link to="/" className="flex-menu">
+      <div className="flex-menu">
+        <Link to="/">
           <div>
             <h1>Name</h1>
           </div>
-          <div className="menu-btn">
-            <DrawerMenu />
-          </div>
         </Link>
+        <div className="menu-btn">
+          <DrawerMenu />
+        </div>
       </div>
       <div className="options">
         <Link to="/projects/editorial">
