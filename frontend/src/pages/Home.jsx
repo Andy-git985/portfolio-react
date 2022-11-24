@@ -9,6 +9,8 @@ const Home = ({ user }) => {
   const [posts, postService] = useResource('/api/posts');
   const navigate = useNavigate();
 
+  const length = posts.length;
+
   const addPost = (postObject) => {
     postService.create(postObject);
   };

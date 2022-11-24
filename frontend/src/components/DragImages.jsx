@@ -14,7 +14,7 @@ const DragImages = ({ images, handleOnDragEnd }) => {
   // }
 
   return (
-    <div className="App">
+    <div className="images App">
       <header className="App-header">
         <h1>Final Space Characters</h1>
         <DragDropContext onDragEnd={handleOnDragEnd}>
