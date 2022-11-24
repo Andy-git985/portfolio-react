@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useField } from '../hooks';
 
-const UploadForm = ({ createPost }) => {
+const UploadForm = ({ createPost, length }) => {
   const [image, setImage] = useState('');
   const title = useField('text');
   const project = useField();
@@ -13,6 +13,7 @@ const UploadForm = ({ createPost }) => {
     formData.append('file', image);
     formData.append('title', title.fields.value);
     formData.append('project', project.fields.value);
+    formData.append('order', length + 1);
     console.log(formData);
     createPost(formData);
     handleReset();

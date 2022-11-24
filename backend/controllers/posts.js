@@ -20,6 +20,7 @@ postsRouter.post('/', upload.single('file'), async (request, response) => {
     image: result.secure_url,
     project: request.body.project,
     cloudinaryId: result.public_id,
+    order: request.body.order,
     createdAt: new Date(),
   });
   const savedPost = await post.save();

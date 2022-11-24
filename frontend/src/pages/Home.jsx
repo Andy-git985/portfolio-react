@@ -36,7 +36,7 @@ const Home = ({ user }) => {
     <div className="flex">
       <div className="menu">
         <Menu link={projectsLink} user={user} />
-        {user && <UploadForm createPost={addPost} />}
+        {user && <UploadForm length={length} createPost={addPost} />}
         <Link to="/edit">
           <div>Edit</div>
         </Link>
