@@ -3,16 +3,6 @@ import React, { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 const DragImages = ({ images, handleOnDragEnd }) => {
-  // const [characters, updateCharacters] = useState(finalSpaceCharacters);
-  // function handleOnDragEnd(result) {
-  //   if (!result.destination) return;
-  //   const items = Array.from(characters);
-  //   const [reorderedItem] = items.splice(result.source.index, 1);
-  //   items.splice(result.destination.index, 0, reorderedItem);
-
-  //   updateCharacters(items);
-  // }
-
   return (
     <div className="images App">
       <header className="App-header">
@@ -25,9 +15,9 @@ const DragImages = ({ images, handleOnDragEnd }) => {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {images.map(({ id, title, image }, index) => {
+                {images.map(({ order, id, title, image }, index) => {
                   return (
-                    <Draggable key={id} draggableId={id} index={index}>
+                    <Draggable key={id} draggableId={id} index={order}>
                       {(provided) => (
                         <li
                           ref={provided.innerRef}

@@ -21,13 +21,11 @@ const Images = ({ images, removeImage }) => {
     <>
       {images.length > 1 ? (
         <ImageList className="images masonry" variant="masonry" gap={8}>
-          {images
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-            .map((image) => (
-              <ImageListItem key={image.id}>
-                <Image image={image} />
-              </ImageListItem>
-            ))}
+          {images.map((image) => (
+            <ImageListItem key={image.id}>
+              <Image image={image} />
+            </ImageListItem>
+          ))}
         </ImageList>
       ) : (
         <div className="images">

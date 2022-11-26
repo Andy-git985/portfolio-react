@@ -35,7 +35,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/*" element={<Home user={user} />} />
-        <Route path="/edit" element={<Edit />} />
+        <Route path="/edit/*" element={<Edit />} />
       </Routes>
     </BrowserRouter>
   );
