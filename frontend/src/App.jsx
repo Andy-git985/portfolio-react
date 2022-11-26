@@ -1,7 +1,7 @@
 import { initializePosts } from './reducers/postReducer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import Images from './components/Images';
+import Home from './pages/Home';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const App = () => {
 
   return (
     <div>
-      <Images />
+      <Home />
     </div>
   );
 };

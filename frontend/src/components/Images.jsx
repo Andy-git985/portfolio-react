@@ -4,7 +4,7 @@ const Images = () => {
     return posts;
   });
   return (
-    <div>
+    <div className="images">
       {images.map((image) => {
         return (
           <div key={image.id}>
