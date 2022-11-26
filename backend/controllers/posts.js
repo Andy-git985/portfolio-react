@@ -5,9 +5,12 @@ const Post = require('../models/Post');
 const Order = require('../models/Order');
 
 postsRouter.get('/', async (request, response) => {
+  console.log('received');
   const posts = await Order.findOne({ name: 'posts' }).populate('order', {
     image: 1,
+    title: 1,
   });
+  console.log(posts);
   response.json(posts.order);
 });
 

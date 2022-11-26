@@ -1,5 +1,9 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { removePost } from '../reducers/postReducer';
 import { Link } from 'react-router-dom';
 import { ImageList, ImageListItem } from '@mui/material';
+import postService from '../services/posts';
+import LoginButton from './LoginButton';
 
 const Image = ({ image }) => {
   return (
@@ -12,9 +16,15 @@ const Image = ({ image }) => {
   );
 };
 
-const Images = ({ images, removeImage }) => {
+const Images = () => {
+  const dispatch = useDispatch();
+
+  const images = useSelector(({ posts }) => {
+    return posts;
+  });
+  console.log(images);
   const handleClick = (id) => {
-    removeImage(id);
+    dispatch(removePost(id));
   };
 
   return (

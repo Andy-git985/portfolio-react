@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useField } from '../hooks';
+import { useDispatch } from 'react-redux';
 
 const UploadForm = ({ createPost, length }) => {
   const [image, setImage] = useState('');
   const title = useField('text');
   const project = useField();
   const projects = ['editorial', 'advertising', 'video'];
+  const dispatch = useDispatch();
 
   const addPost = async (event) => {
     event.preventDefault();
@@ -15,7 +17,8 @@ const UploadForm = ({ createPost, length }) => {
     formData.append('project', project.fields.value);
     formData.append('order', length + 1);
     console.log(formData);
-    createPost(formData);
+    // createPost(formData);
+    dispatch(createPost(formData));
     handleReset();
   };
 
