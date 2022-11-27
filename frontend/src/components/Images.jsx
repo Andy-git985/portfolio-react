@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { styled } from '@mui/material/styles';
 
 const ImagesContainer = styled('div')(() => ({
-  width: '70%',
+  width: '65%',
   flexShrink: '0',
   marginInline: 'auto',
   padding: '1.5em',

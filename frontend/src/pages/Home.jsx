@@ -1,16 +1,17 @@
-import Images from '../components/Images';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
+import Images from '../components/Images';
+import UploadForm from '../components/UploadForm';
 
 const MenuDesktopContainer = styled('div')(() => ({
-  width: '30%',
+  width: 'calc(100vw - 75%)',
   height: '100vh',
   outline: '1px solid blue',
   flexShrink: '0',
 }));
 
-const MobileContainer = styled('div')(() => ({
+const HomeMobileContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
 }));
@@ -21,9 +22,12 @@ const HomeDesktop = () => {
       {/* Menu component */}
       <MenuDesktopContainer>
         <div className="menu">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-          nobis aperiam? Excepturi, quos incidunt voluptatem illo dolore nobis
-          eligendi deserunt, ducimus esse ullam autem sequi.
+          <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
+            nobis aperiam? Excepturi, quos incidunt voluptatem illo dolore nobis
+            eligendi deserunt, ducimus esse ullam autem sequi.
+          </div>
+          <UploadForm />
         </div>
       </MenuDesktopContainer>
       <Images />
@@ -33,16 +37,22 @@ const HomeDesktop = () => {
 
 const HomeMobile = () => {
   return (
-    <MobileContainer>
+    <HomeMobileContainer>
+      {/* Menu Container */}
       <div>
+        {/* Menu no needed for fixed */}
         <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-          nobis aperiam? Excepturi, quos incidunt voluptatem illo dolore nobis
-          eligendi deserunt, ducimus esse ullam autem sequi.
+          {/* Menu Links */}
+          <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
+            nobis aperiam? Excepturi, quos incidunt voluptatem illo dolore nobis
+            eligendi deserunt, ducimus esse ullam autem sequi.
+          </div>
+          <UploadForm />
         </div>
       </div>
       <Images />
-    </MobileContainer>
+    </HomeMobileContainer>
   );
 };
 

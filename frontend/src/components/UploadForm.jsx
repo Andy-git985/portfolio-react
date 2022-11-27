@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useField } from '../hooks';
 import { useDispatch } from 'react-redux';
+import { createPost } from '../reducers/postReducer';
 
-const UploadForm = ({ createPost, length }) => {
+const UploadForm = (props) => {
   const [image, setImage] = useState('');
   const title = useField('text');
   const project = useField();
@@ -15,7 +16,6 @@ const UploadForm = ({ createPost, length }) => {
     formData.append('file', image);
     formData.append('title', title.fields.value);
     formData.append('project', project.fields.value);
-    formData.append('order', length + 1);
     console.log(formData);
     // createPost(formData);
     dispatch(createPost(formData));
