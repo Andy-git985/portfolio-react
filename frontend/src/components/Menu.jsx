@@ -1,42 +1,43 @@
-import { Link } from 'react-router-dom';
-import DrawerMenu from './DrawerMenu';
-import LoginButton from './LoginButton';
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
-const Logout = styled.div`
-  cursor: pointer;
-`;
+const MenuContainer = styled('ul')(() => ({
+  display: 'flex',
+  background: '#000',
+  flexDirection: 'column',
+  padding: '8px',
+}));
 
-const Menu = ({ link, user }) => {
-  const logout = () => {
-    window.open('http://localhost:3001/auth/logout', '_self');
-  };
+const DesktopMenuContainer = styled(MenuContainer)(() => ({
+  flexDirection: 'row',
+  justifyContent: 'space-evenly',
+}));
+const MenuItem = styled('li')(() => ({
+  padding: '4px',
+}));
+
+export const MenuDesktop = () => {
   return (
-    <>
-      <div className="flex-menu">
-        <Link to="/">
-          <div>
-            <h1>Name</h1>
-          </div>
-        </Link>
-        <div className="menu-btn">
-          <DrawerMenu />
-        </div>
-      </div>
-      <div className="options">
-        <Link to={`/${link}/editorial`}>
-          <div>editorial</div>
-        </Link>
-        <Link to={`/${link}/advertising`}>
-          <div>advertising</div>
-        </Link>
-        <div>video</div>
-        <div>photo diary</div>
-        <div>contact</div>
-        {user ? <Logout onClick={logout}>Logout</Logout> : <LoginButton />}
-      </div>
-    </>
+    <DesktopMenuContainer>
+      <MenuItem>Home</MenuItem>
+      <MenuItem>About</MenuItem>
+      <MenuItem>Contact</MenuItem>
+    </DesktopMenuContainer>
   );
 };
 
-export default Menu;
+const Bar = styled('div')(() => ({
+  content: "''",
+  width: '30px',
+  border: '1px solid #00adb5',
+  margin: '4px',
+}));
+
+export const MenuMobile = () => {
+  return (
+    <MenuContainer>
+      <Bar />
+      <Bar />
+      <Bar />
+    </MenuContainer>
+  );
+};
