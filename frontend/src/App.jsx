@@ -2,6 +2,8 @@ import { initializePosts } from './reducers/postReducer';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import Home from './pages/Home';
+import { theme } from './styles/styles';
+import { ThemeProvider } from '@mui/material';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -10,9 +12,9 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Home />
-    </div>
+    </ThemeProvider>
   );
 };
 
