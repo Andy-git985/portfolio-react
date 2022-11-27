@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Home from './pages/Home';
 import { theme } from './styles/styles';
 import { ThemeProvider } from '@mui/material';
+import Edit from './pages/Edit';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Home />
+      <Edit />
     </ThemeProvider>
   );
 };

@@ -4,13 +4,19 @@ const cloudinary = require('../utils/cloudinary');
 const Post = require('../models/Post');
 const Order = require('../models/Order');
 
+postsRouter.post('/order', async (request, response) => {
+  const order = new Order({
+    name: 'posts',
+  });
+  await order.save();
+  response.status(201).json(order);
+});
+
 postsRouter.get('/', async (request, response) => {
-  console.log('received');
   const posts = await Order.findOne({ name: 'posts' }).populate('order', {
     image: 1,
     title: 1,
   });
-  console.log(posts);
   response.json(posts.order);
 });
 
@@ -38,12 +44,16 @@ postsRouter.post('/', upload.single('file'), async (request, response) => {
   response.status(201).json(savedPost);
 });
 
-postsRouter.put('/edit', async (request, response) => {
-  const body = request.body;
+postsRouter.put('/', async (request, response) => {
+  const ids = request.body.map((b) => b.id);
   const postsOrder = await Order.findOne({ name: 'posts' });
-  postsOrder.order = body.order;
+  postsOrder.order = ids;
   await postsOrder.save();
-  response.status(202).json(postsOrder.order);
+  const posts = await Order.findOne({ name: 'posts' }).populate('order', {
+    image: 1,
+    title: 1,
+  });
+  response.status(202).json(posts.order);
 });
 
 postsRouter.delete('/:id', async (request, response) => {

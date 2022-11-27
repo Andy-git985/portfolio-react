@@ -8,8 +8,7 @@ const postSlice = createSlice({
     setPostOrder(state, action) {
       console.log('ACTION: UPDATE', action);
       const updatedOrder = action.payload;
-      state = updatedOrder;
-      return state;
+      return state.map((post, i) => (post = updatedOrder[i]));
     },
     removeOnePost(state, action) {
       console.log('ACTION: DELETE', action);

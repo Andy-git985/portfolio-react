@@ -1,2 +1,24 @@
 POST http://localhost:3001/api/posts/order
 Content-Type: application/json
+
+###
+PUT http://localhost:3001/api/posts/
+Content-Type: application/json
+
+[
+   {
+    "_id": "6382f2d0991f965666566354",
+    "title": "Jade-3",
+    "image": "https://res.cloudinary.com/dhswbwpzv/image/upload/v1669526223/mdadjlurpnu2hqrudetf.jpg"
+  },
+  {
+    "_id": "6382f2bb991f965666566350",
+    "title": "Jade-2",
+    "image": "https://res.cloudinary.com/dhswbwpzv/image/upload/v1669526203/bidfloxozdh6t5bt1ffr.jpg"
+  },
+  {
+    "_id": "6382f2b1991f96566656634b",
+    "title": "Jade-1",
+    "image": "https://res.cloudinary.com/dhswbwpzv/image/upload/v1669526192/rtzate9le6ttm7kjdqju.jpg"
+  }
+]

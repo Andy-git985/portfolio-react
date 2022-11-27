@@ -1,54 +1,75 @@
-import { Routes, Route, useMatch, useNavigate, Link } from 'react-router-dom';
-import { useResource } from '../hooks';
+import { useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
+import ImagesDraggable from '../components/ImagesDraggable';
+import UploadForm from '../components/UploadForm';
 
-import Menu from '../components/Menu';
-// import Images from '../components/Images';
-// import UploadForm from '../components/UploadForm';
-import DragImages from '../components/DragImages';
-import { useState } from 'react';
+const HomeDesktopContainer = styled('div')(() => ({
+  display: 'flex',
+  // justifyContent: 'space-between',
+}));
 
-const Edit = ({ user }) => {
-  const [posts, postService] = useResource('/api/posts');
-  const [order, setOrder] = useState(posts);
-  // const navigate = useNavigate();
+const MenuDesktopContainer = styled('div')(() => ({
+  width: 'calc(100vw - 70%)',
+  height: '100vh',
+  outline: '1px solid blue',
+  flexShrink: '0',
+}));
 
-  const editLink = 'edit';
-  const projectMatch = useMatch('/edit/:project');
-  // const postMatch = useMatch('/:id');
+const HomeMobileContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+}));
 
-  const images = projectMatch
-    ? posts.filter((p) => p.project === projectMatch.params.project)
-    : posts;
-
-  // const image = postMatch
-  //   ? posts.filter((p) => p.id === postMatch.params.id)
-  //   : posts;
-
-  const handleOnDragEnd = (result) => {
-    if (!result.destination) return;
-    const items = Array.from(order);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    setOrder(items);
-  };
-
+const HomeDesktop = () => {
   return (
-    <div className="flex">
-      <div className="menu">
-        <Menu link={editLink} user={user} />
+    <HomeDesktopContainer>
+      {/* Menu component */}
+      <MenuDesktopContainer>
+        <div className="menu">
+          <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
+            nobis aperiam? Excepturi, quos incidunt voluptatem illo dolore nobis
+            eligendi deserunt, ducimus esse ullam autem sequi.
+          </div>
+          <UploadForm />
+        </div>
+      </MenuDesktopContainer>
+      <ImagesDraggable />
+    </HomeDesktopContainer>
+  );
+};
+
+const HomeMobile = () => {
+  return (
+    <HomeMobileContainer>
+      {/* Menu Container */}
+      <div>
+        {/* Menu not needed for fixed */}
+        <div>
+          {/* Menu Links */}
+          <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
+            nobis aperiam? Excepturi, quos incidunt voluptatem illo dolore nobis
+            eligendi deserunt, ducimus esse ullam autem sequi.
+          </div>
+          <UploadForm />
+        </div>
       </div>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <DragImages images={images} handleOnDragEnd={handleOnDragEnd} />
-          }
-        />
-        {/* <Route path="/:project" element={<Images images={images} />} /> */}
-      </Routes>
+      <ImagesDraggable />
+    </HomeMobileContainer>
+  );
+};
+
+const Home = () => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('tablet'));
+  return (
+    <div>
+      {!matches && <HomeDesktop />}
+      {matches && <HomeMobile />}
     </div>
   );
 };
 
-export default Edit;
+export default Home;

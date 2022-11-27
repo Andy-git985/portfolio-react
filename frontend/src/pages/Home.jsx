@@ -1,11 +1,16 @@
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
-import Images from '../components/Images';
+import { ImagesDesktop, ImagesMobile } from '../components/Images';
 import UploadForm from '../components/UploadForm';
 
+const HomeDesktopContainer = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+}));
+
 const MenuDesktopContainer = styled('div')(() => ({
-  width: 'calc(100vw - 75%)',
+  width: 'calc(100vw - 70%)',
   height: '100vh',
   outline: '1px solid blue',
   flexShrink: '0',
@@ -18,7 +23,7 @@ const HomeMobileContainer = styled('div')(() => ({
 
 const HomeDesktop = () => {
   return (
-    <div className="flex">
+    <HomeDesktopContainer>
       {/* Menu component */}
       <MenuDesktopContainer>
         <div className="menu">
@@ -30,8 +35,8 @@ const HomeDesktop = () => {
           <UploadForm />
         </div>
       </MenuDesktopContainer>
-      <Images />
-    </div>
+      <ImagesDesktop />
+    </HomeDesktopContainer>
   );
 };
 
@@ -40,7 +45,7 @@ const HomeMobile = () => {
     <HomeMobileContainer>
       {/* Menu Container */}
       <div>
-        {/* Menu no needed for fixed */}
+        {/* Menu not needed for fixed */}
         <div>
           {/* Menu Links */}
           <div>
@@ -51,7 +56,7 @@ const HomeMobile = () => {
           <UploadForm />
         </div>
       </div>
-      <Images />
+      <ImagesMobile />
     </HomeMobileContainer>
   );
 };

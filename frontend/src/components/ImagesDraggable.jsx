@@ -1,23 +1,45 @@
-import React, { useState } from 'react';
-// import './App.css';
+import { useDispatch, useSelector } from 'react-redux';
+import '../index.css';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { updatePostOrder } from '../reducers/postReducer';
 
-const DragImages = ({ images, handleOnDragEnd }) => {
+import { styled } from '@mui/material/styles';
+const OutlineContainer = styled('div')(() => ({
+  outline: '1px solid blue',
+}));
+
+const ImagesDraggable = () => {
+  const dispatch = useDispatch();
+  const images = useSelector(({ posts }) => {
+    return posts;
+  });
+
+  function handleOnDragEnd(result) {
+    if (!result.destination) return;
+    const items = Array.from(images);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    console.log(items);
+
+    // updateCharacters(items);
+    dispatch(updatePostOrder(items));
+  }
+
   return (
-    <div className="images App">
-      <header className="App-header">
+    <OutlineContainer>
+      <header>
         <h1>Final Space Characters</h1>
         <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId="characters">
+          <Droppable droppableId="images">
             {(provided) => (
               <ul
                 className="characters"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {images.map(({ order, id, title, image }, index) => {
+                {images.map(({ id, title, image }, index) => {
                   return (
-                    <Draggable key={id} draggableId={id} index={order}>
+                    <Draggable key={id} draggableId={id} index={index}>
                       {(provided) => (
                         <li
                           ref={provided.innerRef}
@@ -25,7 +47,8 @@ const DragImages = ({ images, handleOnDragEnd }) => {
                           {...provided.dragHandleProps}
                         >
                           <div className="characters-thumb">
-                            <img src={image} alt={`${title} Thumb`} />
+                            <img src={image} alt={`${image} Thumb`} />
+                            <div>{id}</div>
                           </div>
                           <p>{title}</p>
                         </li>
@@ -45,8 +68,8 @@ const DragImages = ({ images, handleOnDragEnd }) => {
           Final Space Wiki
         </a>
       </p>
-    </div>
+    </OutlineContainer>
   );
 };
 
-export default DragImages;
+export default ImagesDraggable;
