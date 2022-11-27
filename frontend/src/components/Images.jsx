@@ -1,10 +1,19 @@
 import { useSelector } from 'react-redux';
+import { styled } from '@mui/material/styles';
+
+const ImagesContainer = styled('div')(() => ({
+  width: 'calc(100vw - 30%)',
+  flexShrink: '0',
+  marginInline: 'auto',
+  padding: '1em',
+}));
+
 const Images = () => {
   const images = useSelector(({ posts }) => {
     return posts;
   });
   return (
-    <div className="images">
+    <ImagesContainer>
       {images.map((image) => {
         return (
           <div key={image.id}>
@@ -12,7 +21,7 @@ const Images = () => {
           </div>
         );
       })}
-    </div>
+    </ImagesContainer>
   );
 };
 
