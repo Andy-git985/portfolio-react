@@ -1,4 +1,5 @@
 import { styled } from '@mui/material/styles';
+import DrawerMenu from './DrawerMenu';
 
 const MenuContainer = styled('ul')(() => ({
   display: 'flex',
@@ -32,12 +33,20 @@ const Bar = styled('div')(() => ({
   margin: '4px',
 }));
 
+const MenuMobileContainer = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '.625rem',
+}));
+
 export const MenuMobile = () => {
   return (
-    <MenuContainer>
-      <Bar />
-      <Bar />
-      <Bar />
-    </MenuContainer>
+    <>
+      {/* extra div for now */}
+      <MenuMobileContainer>
+        <div>Name</div>
+        <DrawerMenu />
+      </MenuMobileContainer>
+    </>
   );
 };

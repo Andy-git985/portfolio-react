@@ -1,20 +1,20 @@
 import Google from '../img/google.png';
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
-const Button = styled.div`
-  width: 50px;
-  padding: 15px;
-  border-radius: 50px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  background-color: black;
-`;
+const Icon = styled('img')(() => ({
+  width: '20px',
+  height: '20px',
+}));
 
-const Icon = styled.img`
-  width: 20px;
-  height: 20px;
-`;
+const Button = styled('div')(() => ({
+  width: '20px',
+  padding: '10px',
+  borderRadius: '50px',
+  color: 'white',
+  fontWeight: 'bold',
+  cursor: 'pointer',
+  backgroundColor: 'black',
+}));
 
 const LoginButton = () => {
   const google = () => {

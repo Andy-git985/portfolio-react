@@ -2,7 +2,9 @@ import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import { ImagesDesktop, ImagesMobile } from '../components/Images';
+import LoginButton from '../components/LoginButton';
 import UploadForm from '../components/UploadForm';
+import { MenuMobile } from '../components/Menu';
 
 const HomeDesktopContainer = styled('div')(() => ({
   display: 'flex',
@@ -16,9 +18,18 @@ const MenuDesktopContainer = styled('div')(() => ({
   flexShrink: '0',
 }));
 
+const MenuFixedContent = styled('div')(() => ({
+  position: 'fixed',
+  width: 'calc(100vw - 85%)',
+  padding: '15px',
+  top: '0',
+  left: '0',
+}));
+
 const HomeMobileContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
+  gap: '1.25rem',
 }));
 
 const HomeDesktop = () => {
@@ -26,14 +37,14 @@ const HomeDesktop = () => {
     <HomeDesktopContainer>
       {/* Menu component */}
       <MenuDesktopContainer>
-        <div className="menu">
-          <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            nobis aperiam? Excepturi, quos incidunt voluptatem illo dolore nobis
-            eligendi deserunt, ducimus esse ullam autem sequi.
-          </div>
+        <MenuFixedContent>
+          <div>Name</div>
+          <div>Editorial</div>
+          <div>Advertising</div>
+          <div>Contact</div>
+          <LoginButton />
           <UploadForm />
-        </div>
+        </MenuFixedContent>
       </MenuDesktopContainer>
       <ImagesDesktop />
     </HomeDesktopContainer>
@@ -46,15 +57,9 @@ const HomeMobile = () => {
       {/* Menu Container */}
       <div>
         {/* Menu not needed for fixed */}
-        <div>
-          {/* Menu Links */}
-          <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            nobis aperiam? Excepturi, quos incidunt voluptatem illo dolore nobis
-            eligendi deserunt, ducimus esse ullam autem sequi.
-          </div>
-          <UploadForm />
-        </div>
+        <MenuMobile />
+        <LoginButton />
+        <UploadForm />
       </div>
       <ImagesMobile />
     </HomeMobileContainer>

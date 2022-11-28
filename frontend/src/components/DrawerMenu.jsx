@@ -1,6 +1,6 @@
 import { Drawer, ListItem, ListItemText, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+// import { Link } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 
 const data = [
@@ -11,10 +11,10 @@ const data = [
   { name: 'ADVERTISING', route: '/projects/advertising' },
 ];
 
-const Menu = styled.div`
-  background-color: yellow;
-  padding: 1em;
-`;
+const Menu = styled('div')(() => ({
+  backgroundColor: 'yellow',
+  padding: '1em',
+}));
 
 const DrawerMenu = () => {
   const [open, setOpen] = useState(false);
@@ -23,9 +23,9 @@ const DrawerMenu = () => {
     <Menu onClick={() => setOpen(false)}>
       {data.map((item, index) => (
         <ListItem key={index}>
-          <Link to={item.route}>
-            <ListItemText primary={item.name} />
-          </Link>
+          {/* <Link to={item.route}> */}
+          <ListItemText primary={item.name} />
+          {/* </Link> */}
         </ListItem>
       ))}
     </Menu>
