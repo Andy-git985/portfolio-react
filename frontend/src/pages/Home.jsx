@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
@@ -33,6 +34,10 @@ const HomeMobileContainer = styled('div')(() => ({
 }));
 
 const HomeDesktop = () => {
+  const user = useSelector(({ users }) => {
+    return users;
+  });
+  console.log('user', user);
   return (
     <HomeDesktopContainer>
       {/* Menu component */}
@@ -43,7 +48,8 @@ const HomeDesktop = () => {
           <div>Advertising</div>
           <div>Contact</div>
           <LoginButton />
-          <UploadForm />
+          {user && <UploadForm />}
+          <div>{user.displayName}</div>
         </MenuFixedContent>
       </MenuDesktopContainer>
       <ImagesDesktop />

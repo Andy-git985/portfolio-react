@@ -16,7 +16,7 @@ const postSlice = createSlice({
       return state.filter((post) => post.id !== id);
     },
     appendPost(state, action) {
-      state.push(action.payload);
+      state.push(...action.payload);
     },
     setPosts(state, action) {
       return action.payload;
@@ -34,8 +34,8 @@ export const initializePosts = () => {
 };
 export const createPost = (content) => {
   return async (dispatch) => {
-    const newpost = await postService.createNew(content);
-    dispatch(appendPost(newpost));
+    const newPost = await postService.createNew(content);
+    dispatch(appendPost(newPost));
   };
 };
 export const updatePostOrder = (order) => {

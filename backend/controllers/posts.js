@@ -28,32 +28,36 @@ postsRouter.get('/edit', async (request, response) => {
   response.json(posts.order);
 });
 
-postsRouter.post('/', upload.single('file'), async (request, response) => {
-  const result = await cloudinary.uploader.upload(request.file.path);
-  const post = new Post({
-    title: request.body.title,
-    image: result.secure_url,
-    project: request.body.project,
-    cloudinaryId: result.public_id,
-    createdAt: new Date(),
-  });
-  const savedPost = await post.save();
+postsRouter.post('/', upload.array('file', 10), async (request, response) => {
+  const files = request.files.map((file) =>
+    cloudinary.uploader.upload(file.path)
+  );
+  const results = await Promise.all(files);
+  const posts = results.map(
+    (result, index) =>
+      new Post({
+        title: `${request.body.title}-${index + 1}`,
+        image: result.secure_url,
+        project: request.body.project,
+        cloudinaryId: result.public_id,
+        createdAt: new Date(),
+      })
+  );
+  const postsToBeSaved = posts.map((post) => post.save());
+  const savedPosts = await Promise.all(postsToBeSaved);
   const postsOrder = await Order.findOne({ name: 'posts' });
-  postsOrder.order.push(savedPost);
+  postsOrder.order.push(...savedPosts);
   await postsOrder.save();
-  response.status(201).json(savedPost);
+  response.status(201).json(savedPosts);
 });
 
 postsRouter.put('/', async (request, response) => {
+  const updatedOrder = request.body;
   const ids = request.body.map((b) => b.id);
   const postsOrder = await Order.findOne({ name: 'posts' });
   postsOrder.order = ids;
   await postsOrder.save();
-  const posts = await Order.findOne({ name: 'posts' }).populate('order', {
-    image: 1,
-    title: 1,
-  });
-  response.status(202).json(posts.order);
+  response.status(200).json(updatedOrder);
 });
 
 postsRouter.delete('/:id', async (request, response) => {

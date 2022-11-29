@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { createPost } from '../reducers/postReducer';
 
 const UploadForm = (props) => {
-  const [image, setImage] = useState('');
+  const [images, setImages] = useState([]);
   const title = useField('text');
   const project = useField();
   const projects = ['editorial', 'advertising', 'video'];
@@ -13,23 +13,23 @@ const UploadForm = (props) => {
   const addPost = async (event) => {
     event.preventDefault();
     let formData = new FormData();
-    formData.append('file', image);
+    for (const image of images) {
+      formData.append('file', image);
+    }
     formData.append('title', title.fields.value);
     formData.append('project', project.fields.value);
-    console.log(formData);
-    // createPost(formData);
     dispatch(createPost(formData));
     handleReset();
   };
 
   const handleFileChange = (e) => {
-    setImage(e.target.files[0]);
+    setImages(e.target.files);
   };
 
   const handleReset = () => {
     title.reset();
     project.reset();
-    setImage('');
+    setImages('');
   };
 
   const Select = ({ value, onChange, optionValues }) => {
@@ -54,7 +54,12 @@ const UploadForm = (props) => {
       <form onSubmit={addPost} encType="multipart/form">
         <input {...title.fields} />
         <Select {...project.fields} optionValues={projects} />
-        <input type="file" name="file" onChange={handleFileChange}></input>
+        <input
+          type="file"
+          name="file"
+          onChange={handleFileChange}
+          multiple
+        ></input>
         <button type="submit">Submit</button>
       </form>
     </div>
