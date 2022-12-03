@@ -48,8 +48,7 @@ const HomeDesktop = () => {
           <div>Advertising</div>
           <div>Contact</div>
           <LoginButton />
-          {user && <UploadForm />}
-          <div>{user.displayName}</div>
+          <UploadForm />
         </MenuFixedContent>
       </MenuDesktopContainer>
       <ImagesDesktop />

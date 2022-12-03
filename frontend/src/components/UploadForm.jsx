@@ -1,36 +1,36 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useField } from '../hooks';
 import { useDispatch } from 'react-redux';
 import { createPost } from '../reducers/postReducer';
 
 const UploadForm = (props) => {
-  const [images, setImages] = useState([]);
+  // const [images, setImages] = useState([]);
   const title = useField('text');
   const project = useField();
   const projects = ['editorial', 'advertising', 'video'];
+  const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
 
-  const addPost = async (event) => {
-    event.preventDefault();
-    let formData = new FormData();
-    for (const image of images) {
+  const addPost = async (data) => {
+    const formData = new FormData();
+    for (const image of data.file) {
       formData.append('file', image);
     }
-    formData.append('title', title.fields.value);
-    formData.append('project', project.fields.value);
+    formData.append('title', data.title);
+    formData.append('project', data.project);
     dispatch(createPost(formData));
-    handleReset();
+    console.log(formData);
   };
 
-  const handleFileChange = (e) => {
-    setImages(e.target.files);
-  };
+  // const handleFileChange = (e) => {
+  //   setImages(e.target.files);
+  // };
 
-  const handleReset = () => {
-    title.reset();
-    project.reset();
-    setImages('');
-  };
+  // const handleReset = () => {
+  //   title.reset();
+  //   project.reset();
+  //   setImages('');
+  // };
 
   const Select = ({ value, onChange, optionValues }) => {
     return (
@@ -51,14 +51,25 @@ const UploadForm = (props) => {
     <div>
       <h5>Upload to server</h5>
 
-      <form onSubmit={addPost} encType="multipart/form">
-        <input {...title.fields} />
-        <Select {...project.fields} optionValues={projects} />
+      <form onSubmit={handleSubmit(addPost)} encType="multipart/form">
+        {/* <input {...title.fields} {...register('title')} /> */}
+        <input type="text" {...register('title')}></input>
+        {/* <Select
+          {...project.fields}
+          optionValues={projects}
+          {...register('project')}
+        /> */}
+        <select {...register('project')}>
+          <option>Select project</option>
+          <option value="editorial">Editorial</option>
+          <option value="advertising">Advertising</option>
+        </select>
         <input
           type="file"
           name="file"
-          onChange={handleFileChange}
+          // onChange={handleFileChange}
           multiple
+          {...register('file')}
         ></input>
         <button type="submit">Submit</button>
       </form>

@@ -29,6 +29,8 @@ postsRouter.get('/edit', async (request, response) => {
 });
 
 postsRouter.post('/', upload.array('file', 10), async (request, response) => {
+  console.log(request.body);
+  console.log(request.files);
   const files = request.files.map((file) =>
     cloudinary.uploader.upload(file.path)
   );
