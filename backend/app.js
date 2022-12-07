@@ -1,5 +1,4 @@
 const config = require('./utils/config');
-const session = require('express-session');
 const express = require('express');
 require('express-async-errors');
 const app = express();
@@ -23,17 +22,7 @@ mongoose
     logger.error('error connecting to MongoDB:', error.message);
   });
 
-app.use(
-  session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-
 app.use(passport.initialize());
-app.use(passport.session());
-// app.use(cors());
 app.use(
   cors({
     origin: 'http://localhost:3000',
