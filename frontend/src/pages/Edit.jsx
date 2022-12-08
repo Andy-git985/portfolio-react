@@ -1,8 +1,11 @@
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import ImagesDraggable from '../components/ImagesDraggable';
 import UploadForm from '../components/UploadForm';
+import postServices from '../services/posts';
 
 const HomeDesktopContainer = styled('div')(() => ({
   display: 'flex',
@@ -22,6 +25,11 @@ const HomeMobileContainer = styled('div')(() => ({
 }));
 
 const HomeDesktop = () => {
+  const userToken = useSelector(({ user }) => user.userToken);
+  if (userToken) {
+    postServices.setToken(userToken);
+  }
+
   return (
     <HomeDesktopContainer>
       {/* Menu component */}
@@ -32,7 +40,11 @@ const HomeDesktop = () => {
             nobis aperiam? Excepturi, quos incidunt voluptatem illo dolore nobis
             eligendi deserunt, ducimus esse ullam autem sequi.
           </div>
-          <UploadForm />
+          {userToken && (
+            <Link to="/">
+              <div>Home</div>
+            </Link>
+          )}
         </div>
       </MenuDesktopContainer>
       <ImagesDraggable />
@@ -61,7 +73,7 @@ const HomeMobile = () => {
   );
 };
 
-const Home = () => {
+const Edit = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('tablet'));
   return (
@@ -72,4 +84,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Edit;

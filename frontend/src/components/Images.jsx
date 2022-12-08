@@ -20,8 +20,11 @@ const CustomImageListItem = styled(ImageListItem)(() => ({
 // }));
 
 export const ImagesDesktop = () => {
-  const images = useSelector(({ posts }) => {
-    return posts;
+  const images = useSelector(({ filter, posts }) => {
+    if (filter === null) {
+      return posts;
+    }
+    return posts.filter((p) => p.project === filter);
   });
   return (
     <CustomImageList variant="masonry" cols={3} gap={8}>
@@ -37,8 +40,11 @@ export const ImagesDesktop = () => {
 };
 
 export const ImagesTablet = () => {
-  const images = useSelector(({ posts }) => {
-    return posts;
+  const images = useSelector(({ filter, posts }) => {
+    if (filter === null) {
+      return posts;
+    }
+    return posts.filter((p) => p.project === filter);
   });
   return (
     <CustomImageList variant="masonry" cols={2} gap={8}>
@@ -54,8 +60,11 @@ export const ImagesTablet = () => {
 };
 
 export const ImagesMobile = () => {
-  const images = useSelector(({ posts }) => {
-    return posts;
+  const images = useSelector(({ filter, posts }) => {
+    if (filter === null) {
+      return posts;
+    }
+    return posts.filter((p) => p.project === filter);
   });
   return (
     <div>

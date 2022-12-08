@@ -17,6 +17,7 @@ postsRouter.get('/', async (request, response) => {
   const posts = await Order.findOne({ name: 'posts' }).populate('order', {
     image: 1,
     title: 1,
+    project: 1,
   });
   response.json(posts.order);
 });
@@ -25,6 +26,7 @@ postsRouter.get('/edit', async (request, response) => {
   const posts = await Order.findOne({ name: 'posts' }).populate('order', {
     image: 1,
     title: 1,
+    project: 1,
   });
   response.json(posts.order);
 });
@@ -61,25 +63,33 @@ postsRouter.post('/', upload.array('file', 10), async (request, response) => {
 });
 
 postsRouter.put('/', async (request, response) => {
-  const updatedOrder = request.body;
-  const ids = request.body.map((b) => b.id);
-  const postsOrder = await Order.findOne({ name: 'posts' });
-  postsOrder.order = ids;
-  await postsOrder.save();
-  response.status(200).json(updatedOrder);
+  if (request.user === config.ADMIN_ID) {
+    const updatedOrder = request.body;
+    const ids = request.body.map((b) => b.id);
+    const postsOrder = await Order.findOne({ name: 'posts' });
+    postsOrder.order = ids;
+    await postsOrder.save();
+    response.status(200).json(updatedOrder);
+  } else {
+    response.status(401).json({ error: 'unauthorized user' });
+  }
 });
 
 postsRouter.delete('/:id', async (request, response) => {
-  const post = await Post.findByIdAndRemove(request.params.id);
-  await cloudinary.uploader.destroy(post.cloudinaryId);
-  const postsOrder = await Order.findOne({ name: 'posts' });
-  const newOrder = postsOrder.order.filter(
-    (p) => p.toString() !== request.params.id
-  );
-  console.log(newOrder);
-  postsOrder.order = newOrder;
-  await postsOrder.save();
-  response.status(204).end();
+  if (request.user === config.ADMIN_ID) {
+    const post = await Post.findByIdAndRemove(request.params.id);
+    await cloudinary.uploader.destroy(post.cloudinaryId);
+    const postsOrder = await Order.findOne({ name: 'posts' });
+    const newOrder = postsOrder.order.filter(
+      (p) => p.toString() !== request.params.id
+    );
+    console.log(newOrder);
+    postsOrder.order = newOrder;
+    await postsOrder.save();
+    response.status(204).end();
+  } else {
+    response.status(401).json({ error: 'unauthorized user' });
+  }
 });
 
 module.exports = postsRouter;
