@@ -12,12 +12,20 @@ const getAll = async () => {
 };
 
 const createNew = async (content) => {
-  const response = await axios.post(baseUrl, content);
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.post(baseUrl, content, config);
   return response.data;
 };
 
 const updateOrder = async (order) => {
-  const response = await axios.put(baseUrl, order);
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.put(baseUrl, order, config);
   return response.data;
 };
 
@@ -35,4 +43,5 @@ export default {
   createNew,
   updateOrder,
   removeOne,
+  setToken,
 };

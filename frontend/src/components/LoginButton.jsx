@@ -17,9 +17,10 @@ const Button = styled('div')(() => ({
 }));
 
 const LoginButton = () => {
-  const google = () => {
+  const google = async () => {
     window.open('http://localhost:3001/auth/google', '_self');
   };
+
   return (
     <Button onClick={google}>
       <Icon src={Google} alt="" />

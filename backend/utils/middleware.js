@@ -1,4 +1,5 @@
 const logger = require('./logger');
+const jwt = require('jsonwebtoken');
 
 const requestLogger = (request, response, next) => {
   logger.info('Method:', request.method);
@@ -20,8 +21,8 @@ const userExtractor = (request, response, next) => {
   const token = request.token;
   if (token) {
     const decodedToken = jwt.verify(token, process.env.SECRET);
-    if (decodedToken.id) {
-      request.user = decodedToken.id;
+    if (decodedToken.user.id) {
+      request.user = decodedToken.user.id;
     }
   }
   next();

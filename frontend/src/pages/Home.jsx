@@ -7,6 +7,7 @@ import LoginButton from '../components/LoginButton';
 import LogoutButton from '../components/LogoutButton';
 import UploadForm from '../components/UploadForm';
 import { MenuMobile } from '../components/Menu';
+import postServices from '../services/posts';
 
 const HomeDesktopContainer = styled('div')(() => ({
   display: 'flex',
@@ -35,10 +36,11 @@ const HomeMobileContainer = styled('div')(() => ({
 }));
 
 const HomeDesktop = () => {
-  const user = useSelector(({ users }) => {
-    return users;
-  });
-  console.log('user', user);
+  const userToken = useSelector(({ user }) => user.userToken);
+  if (userToken) {
+    postServices.setToken(userToken);
+  }
+
   return (
     <HomeDesktopContainer>
       {/* Menu component */}
@@ -48,9 +50,8 @@ const HomeDesktop = () => {
           <div>Editorial</div>
           <div>Advertising</div>
           <div>Contact</div>
-          <LoginButton />
-          <UploadForm />
-          <LogoutButton />
+          {userToken ? <LogoutButton /> : <LoginButton />}
+          {userToken && <UploadForm />}
         </MenuFixedContent>
       </MenuDesktopContainer>
       <ImagesDesktop />
@@ -59,15 +60,15 @@ const HomeDesktop = () => {
 };
 
 const HomeMobile = () => {
+  const userToken = useSelector(({ user }) => user.userToken);
   return (
     <HomeMobileContainer>
       {/* Menu Container */}
       <div>
         {/* Menu not needed for fixed */}
         <MenuMobile />
-        <LoginButton />
-        <UploadForm />
-        <LogoutButton />
+        {userToken ? <LogoutButton /> : <LoginButton />}
+        {userToken && <UploadForm />}
       </div>
       <ImagesMobile />
     </HomeMobileContainer>

@@ -1,17 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import userService from '../services/user';
 
-const getToken = (key) => {
-  let value = '';
-  document.cookie.split(';').forEach((e) => {
-    if (e.includes(key)) {
-      value = e.split('=')[1];
-    }
-  });
-  return value;
-};
-
-const userToken = document.cookie ? getToken('jwt') : null;
+const userToken = document.cookie ? userService.getToken('jwt') : null;
 
 const initialState = {
   userInfo: {},
@@ -27,8 +17,12 @@ const userSlice = createSlice({
       state.userInfo = null;
       state.userToken = null;
     },
+    setToken(state, action) {
+      state.userToken = action.payload;
+    },
     setUser(state, action) {
-      return action.payload;
+      const user = action.payload;
+      state.userInfo = {};
     },
     removeUser(state, action) {
       console.log('ACTION: LOGOUT', action.payload);
@@ -40,12 +34,12 @@ const userSlice = createSlice({
 });
 
 export const { logout } = userSlice.actions;
-// export const getUser = () => {
-//   return async (dispatch) => {
-//     const user = await userService.getUser();
-//     dispatch(setUser(user));
-//   };
-// };
+export const getUser = () => {
+  return async (dispatch) => {
+    const user = await userService.getUser();
+    console.log(user);
+  };
+};
 // export const logoutUser = (id) => {
 //   return async (dispatch) => {
 //     const response = await userService.logout();

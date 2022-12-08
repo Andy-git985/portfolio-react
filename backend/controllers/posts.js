@@ -34,26 +34,30 @@ postsRouter.post('/', upload.array('file', 10), async (request, response) => {
   console.log('body', request.body);
   console.log('files', request.files);
   console.log('user', request.user);
-  const files = request.files.map((file) =>
-    cloudinary.uploader.upload(file.path)
-  );
-  const results = await Promise.all(files);
-  const posts = results.map(
-    (result, index) =>
-      new Post({
-        title: `${request.body.title}-${index + 1}`,
-        image: result.secure_url,
-        project: request.body.project,
-        cloudinaryId: result.public_id,
-        createdAt: new Date(),
-      })
-  );
-  const postsToBeSaved = posts.map((post) => post.save());
-  const savedPosts = await Promise.all(postsToBeSaved);
-  const postsOrder = await Order.findOne({ name: 'posts' });
-  postsOrder.order.push(...savedPosts);
-  await postsOrder.save();
-  response.status(201).json(savedPosts);
+  if (request.user === config.ADMIN_ID) {
+    const files = request.files.map((file) =>
+      cloudinary.uploader.upload(file.path)
+    );
+    const results = await Promise.all(files);
+    const posts = results.map(
+      (result, index) =>
+        new Post({
+          title: `${request.body.title}-${index + 1}`,
+          image: result.secure_url,
+          project: request.body.project,
+          cloudinaryId: result.public_id,
+          createdAt: new Date(),
+        })
+    );
+    const postsToBeSaved = posts.map((post) => post.save());
+    const savedPosts = await Promise.all(postsToBeSaved);
+    const postsOrder = await Order.findOne({ name: 'posts' });
+    postsOrder.order.push(...savedPosts);
+    await postsOrder.save();
+    response.status(201).json(savedPosts);
+  } else {
+    response.status(401).json({ error: 'unauthorized user' });
+  }
 });
 
 postsRouter.put('/', async (request, response) => {

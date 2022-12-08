@@ -4,12 +4,13 @@ const jwt = require('jsonwebtoken');
 const config = require('../utils/config');
 
 authRouter.get('/login/success', (request, response) => {
+  console.log('request user?', request.user);
   if (request.user) {
     response.status(200).json({
       success: true,
       message: 'successfull',
       user: request.user,
-      // cookies: request.cookies,
+      cookies: request.cookies,
     });
   }
 });
@@ -41,7 +42,6 @@ authRouter.get(
   '/google/callback',
   passport.authenticate('google'),
   (request, response) => {
-    console.log('auth controller callback route', request.user);
     const user = {
       id: request.user.id,
       displayName: request.user.displayName,
@@ -54,7 +54,10 @@ authRouter.get(
       { expiresIn: 60 * 60 }
     );
     response.cookie('jwt', token);
-    response.redirect(config.CLIENT_URL);
+    response.status(200).redirect(config.CLIENT_URL);
+    // response
+    //   .status(200)
+    //   .send({ token, id: user.id, displayName: user.displayName });
   }
 );
 // authRouter.get(
