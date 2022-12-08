@@ -41,7 +41,7 @@ authRouter.get(
   '/google/callback',
   passport.authenticate('google'),
   (request, response) => {
-    console.log('redirected', request.user);
+    console.log('auth controller callback route', request.user);
     const user = {
       id: request.user.id,
       displayName: request.user.displayName,

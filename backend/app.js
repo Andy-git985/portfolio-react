@@ -40,7 +40,8 @@ if (config.NODE_ENV === 'test') {
 }
 
 app.use('/auth', authRouter);
-app.use('/api/posts', postsRouter);
+app.use(middleware.tokenExtractor);
+app.use('/api/posts', middleware.userExtractor, postsRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);

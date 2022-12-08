@@ -4,6 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import { ImagesDesktop, ImagesMobile } from '../components/Images';
 import LoginButton from '../components/LoginButton';
+import LogoutButton from '../components/LogoutButton';
 import UploadForm from '../components/UploadForm';
 import { MenuMobile } from '../components/Menu';
 
@@ -49,6 +50,7 @@ const HomeDesktop = () => {
           <div>Contact</div>
           <LoginButton />
           <UploadForm />
+          <LogoutButton />
         </MenuFixedContent>
       </MenuDesktopContainer>
       <ImagesDesktop />
@@ -65,6 +67,7 @@ const HomeMobile = () => {
         <MenuMobile />
         <LoginButton />
         <UploadForm />
+        <LogoutButton />
       </div>
       <ImagesMobile />
     </HomeMobileContainer>

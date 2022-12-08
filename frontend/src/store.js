@@ -6,7 +6,7 @@ import userReducer from './reducers/userReducer';
 const store = configureStore({
   reducer: {
     posts: postReducer,
-    // user: userReducer,
+    user: userReducer,
   },
 });
 

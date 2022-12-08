@@ -10,8 +10,10 @@ const MONGODB_URI =
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const ADMIN_ID = process.env.ADMIN_ID;
 
 module.exports = {
+  ADMIN_ID,
   CLIENT_URL,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,

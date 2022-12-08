@@ -1,23 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit';
 import userService from '../services/user';
 
+const getToken = (key) => {
+  let value = '';
+  document.cookie.split(';').forEach((e) => {
+    if (e.includes(key)) {
+      value = e.split('=')[1];
+    }
+  });
+  return value;
+};
+
+const userToken = document.cookie ? getToken('jwt') : null;
+
+const initialState = {
+  userInfo: {},
+  userToken,
+};
+
 const userSlice = createSlice({
   name: 'user',
-  initialState: [],
+  initialState,
   reducers: {
-    // setPostOrder(state, action) {
-    //   console.log('ACTION: UPDATE', action);
-    //   const updatedOrder = action.payload;
-    //   return state.map((post, i) => (post = updatedOrder[i]));
-    // },
-    // removeOnePost(state, action) {
-    //   console.log('ACTION: DELETE', action);
-    //   const id = action.payload;
-    //   return state.filter((post) => post.id !== id);
-    // },
-    // appendPost(state, action) {
-    //   state.push(action.payload);
-    // },
+    logout(state, action) {
+      document.cookie = 'jwt= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
+      state.userInfo = null;
+      state.userToken = null;
+    },
     setUser(state, action) {
       return action.payload;
     },
@@ -30,37 +39,19 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, removeUser } = userSlice.actions;
-export const getUser = () => {
-  return async (dispatch) => {
-    const user = await userService.getUser();
-    dispatch(setUser(user));
-  };
-};
-export const logoutUser = (id) => {
-  return async (dispatch) => {
-    const response = await userService.logout();
-    if (response === 200) {
-      dispatch(removeUser(id));
-    }
-  };
-};
-// export const createPost = (content) => {
+export const { logout } = userSlice.actions;
+// export const getUser = () => {
 //   return async (dispatch) => {
-//     const newpost = await postService.createNew(content);
-//     dispatch(appendPost(newpost));
+//     const user = await userService.getUser();
+//     dispatch(setUser(user));
 //   };
 // };
-// export const updatePostOrder = (order) => {
+// export const logoutUser = (id) => {
 //   return async (dispatch) => {
-//     const updatedOrder = await postService.updateOrder(order);
-//     dispatch(setPostOrder(updatedOrder));
-//   };
-// };
-// export const removePost = (id) => {
-//   return async (dispatch) => {
-//     await postService.removeOne(id);
-//     dispatch(removeOnePost(id));
+//     const response = await userService.logout();
+//     if (response === 200) {
+//       dispatch(removeUser(id));
+//     }
 //   };
 // };
 export default userSlice.reducer;
