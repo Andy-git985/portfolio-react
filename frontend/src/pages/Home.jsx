@@ -19,15 +19,23 @@ const HomeMobileContainer = styled('div')(() => ({
 }));
 
 const HomeDesktop = () => {
-  const images = useSelector(({ posts }) => posts);
+  const posts = useSelector(({ posts }) => posts);
+  const projectMatch = useMatch('/project/:project');
+  const images = projectMatch
+    ? posts.filter((p) => p.project === projectMatch.params.project)
+    : posts;
   const match = useMatch('/:id');
-  const image = match ? images.find((i) => i.id === match.params.id) : null;
+  const image = match ? posts.find((i) => i.id === match.params.id) : null;
   return (
     <HomeDesktopContainer>
       {/* Menu component */}
       <MenuDesktop />
       <Routes>
         <Route path="/" element={<ImagesDesktop images={images} />} />
+        <Route
+          path="/project/:project"
+          element={<ImagesDesktop images={images} />}
+        />
         <Route path="/:id" element={<Image image={image} />} />
       </Routes>
     </HomeDesktopContainer>

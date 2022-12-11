@@ -36,13 +36,7 @@ export const ImagesDesktop = ({ images }) => {
   );
 };
 
-export const ImagesTablet = () => {
-  const images = useSelector(({ filter, posts }) => {
-    if (filter === null) {
-      return posts;
-    }
-    return posts.filter((p) => p.project === filter);
-  });
+export const ImagesTablet = ({ images }) => {
   return (
     <CustomImageList variant="masonry" cols={2} gap={8}>
       {images.map((image) => {
@@ -56,13 +50,7 @@ export const ImagesTablet = () => {
   );
 };
 
-export const ImagesMobile = () => {
-  const images = useSelector(({ filter, posts }) => {
-    if (filter === null) {
-      return posts;
-    }
-    return posts.filter((p) => p.project === filter);
-  });
+export const ImagesMobile = ({ images }) => {
   return (
     <div>
       {images.map((image) => {

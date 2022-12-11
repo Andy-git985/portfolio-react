@@ -35,9 +35,15 @@ export const MenuDesktop = () => {
   return (
     <MenuDesktopContainer>
       <MenuFixedContent>
-        <div onClick={() => setFilter(null)}>Name</div>
-        <div onClick={() => setFilter('editorial')}>Editorial</div>
-        <div onClick={() => setFilter('advertising')}>Advertising</div>
+        <Link to="/">
+          <div>Name</div>
+        </Link>
+        <Link to="/project/editorial">
+          <div>Editorial</div>
+        </Link>
+        <Link to="/project/advertising">
+          <div>Advertising</div>
+        </Link>
         <div>Contact</div>
         {user.loggedIn ? <LogoutButton /> : <LoginButton />}
         {user.loggedIn && <UploadForm />}
