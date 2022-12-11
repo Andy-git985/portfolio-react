@@ -28,10 +28,6 @@ export const MenuDesktop = () => {
   if (user.loggedIn) {
     postServices.setToken(user.userToken);
   }
-  const dispatch = useDispatch();
-  const setFilter = (filter) => {
-    dispatch(filterPosts(filter));
-  };
   return (
     <MenuDesktopContainer>
       <MenuFixedContent>
@@ -72,7 +68,9 @@ export const MenuMobile = () => {
     <div>
       {/* extra div for now */}
       <MenuMobileContainer>
-        <div>Name</div>
+        <Link to="/">
+          <div>Name</div>
+        </Link>
         <DrawerMenu />
       </MenuMobileContainer>
       {user.loggedIn ? <LogoutButton /> : <LoginButton />}

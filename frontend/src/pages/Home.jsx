@@ -18,14 +18,7 @@ const HomeMobileContainer = styled('div')(() => ({
   gap: '1.25rem',
 }));
 
-const HomeDesktop = () => {
-  const posts = useSelector(({ posts }) => posts);
-  const projectMatch = useMatch('/project/:project');
-  const images = projectMatch
-    ? posts.filter((p) => p.project === projectMatch.params.project)
-    : posts;
-  const match = useMatch('/:id');
-  const image = match ? posts.find((i) => i.id === match.params.id) : null;
+const HomeDesktop = ({ images, image }) => {
   return (
     <HomeDesktopContainer>
       {/* Menu component */}
@@ -42,12 +35,19 @@ const HomeDesktop = () => {
   );
 };
 
-const HomeMobile = () => {
+const HomeMobile = ({ images, image }) => {
   return (
     <HomeMobileContainer>
       {/* Menu component */}
       <MenuMobile />
-      <ImagesMobile />
+      <Routes>
+        <Route path="/" element={<ImagesMobile images={images} />} />
+        <Route
+          path="/project/:project"
+          element={<ImagesMobile images={images} />}
+        />
+        <Route path="/:id" element={<Image image={image} />} />
+      </Routes>
     </HomeMobileContainer>
   );
 };
@@ -55,10 +55,19 @@ const HomeMobile = () => {
 const Home = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('tablet'));
+
+  const posts = useSelector(({ posts }) => posts);
+  const projectMatch = useMatch('/project/:project');
+  const images = projectMatch
+    ? posts.filter((p) => p.project === projectMatch.params.project)
+    : posts;
+  const match = useMatch('/:id');
+  const image = match ? posts.find((i) => i.id === match.params.id) : null;
+
   return (
     <div>
-      {!matches && <HomeDesktop />}
-      {matches && <HomeMobile />}
+      {!matches && <HomeDesktop images={images} image={image} />}
+      {matches && <HomeMobile images={images} image={image} />}
     </div>
   );
 };

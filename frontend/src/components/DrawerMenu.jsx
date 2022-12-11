@@ -1,14 +1,14 @@
 import { Drawer, ListItem, ListItemText, Button } from '@mui/material';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 
 const data = [
   {
     name: 'EDITORIAL',
-    route: '/projects/editorial',
+    route: '/project/editorial',
   },
-  { name: 'ADVERTISING', route: '/projects/advertising' },
+  { name: 'ADVERTISING', route: '/project/advertising' },
 ];
 
 const Menu = styled('div')(() => ({
@@ -23,9 +23,9 @@ const DrawerMenu = () => {
     <Menu onClick={() => setOpen(false)}>
       {data.map((item, index) => (
         <ListItem key={index}>
-          {/* <Link to={item.route}> */}
-          <ListItemText primary={item.name} />
-          {/* </Link> */}
+          <Link to={item.route}>
+            <ListItemText primary={item.name} />
+          </Link>
         </ListItem>
       ))}
     </Menu>
