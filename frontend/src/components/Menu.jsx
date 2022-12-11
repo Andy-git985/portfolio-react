@@ -1,12 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import DrawerMenu from './DrawerMenu';
-import LoginButton from '../components/LoginButton';
-import LogoutButton from '../components/LogoutButton';
-import UploadForm from '../components/UploadForm';
-import { filterPosts } from '../reducers/filterReducer';
-import postServices from '../services/posts';
+import LoginButton from './LoginButton';
+import Admin from './Admin';
 
 const MenuDesktopContainer = styled('div')(() => ({
   width: 'calc(100vw - 70%)',
@@ -23,11 +19,7 @@ const MenuFixedContent = styled('div')(() => ({
   left: '0',
 }));
 
-export const MenuDesktop = () => {
-  const user = useSelector(({ user }) => user);
-  if (user.loggedIn) {
-    postServices.setToken(user.userToken);
-  }
+export const MenuDesktop = ({ user }) => {
   return (
     <MenuDesktopContainer>
       <MenuFixedContent>
@@ -41,13 +33,7 @@ export const MenuDesktop = () => {
           <div>Advertising</div>
         </Link>
         <div>Contact</div>
-        {user.loggedIn ? <LogoutButton /> : <LoginButton />}
-        {user.loggedIn && <UploadForm />}
-        {user.loggedIn && (
-          <Link to="/edit">
-            <div>Edit</div>
-          </Link>
-        )}
+        {user.loggedIn ? <Admin /> : <LoginButton />}
       </MenuFixedContent>
     </MenuDesktopContainer>
   );
@@ -59,11 +45,7 @@ const MenuMobileContainer = styled('div')(() => ({
   padding: '.625rem',
 }));
 
-export const MenuMobile = () => {
-  const user = useSelector(({ user }) => user);
-  if (user.loggedIn) {
-    postServices.setToken(user.userToken);
-  }
+export const MenuMobile = ({ user }) => {
   return (
     <div>
       {/* extra div for now */}
@@ -73,13 +55,7 @@ export const MenuMobile = () => {
         </Link>
         <DrawerMenu />
       </MenuMobileContainer>
-      {user.loggedIn ? <LogoutButton /> : <LoginButton />}
-      {user.loggedIn && <UploadForm />}
-      {user.loggedIn && (
-        <Link to="/edit">
-          <div>Edit</div>
-        </Link>
-      )}
+      {user.loggedIn ? <Admin /> : <LoginButton />}
     </div>
   );
 };

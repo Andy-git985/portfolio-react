@@ -18,41 +18,41 @@ const HomeMobileContainer = styled('div')(() => ({
   gap: '1.25rem',
 }));
 
-const HomeDesktop = ({ images, image }) => {
+const HomeDesktop = ({ images, image, user }) => {
   return (
     <HomeDesktopContainer>
       {/* Menu component */}
-      <MenuDesktop />
+      <MenuDesktop user={user} />
       <Routes>
         <Route path="/" element={<ImagesDesktop images={images} />} />
         <Route
           path="/project/:project"
           element={<ImagesDesktop images={images} />}
         />
-        <Route path="/:id" element={<Image image={image} />} />
+        <Route path="/:id" element={<Image user={user} image={image} />} />
       </Routes>
     </HomeDesktopContainer>
   );
 };
 
-const HomeMobile = ({ images, image }) => {
+const HomeMobile = ({ images, image, user }) => {
   return (
     <HomeMobileContainer>
       {/* Menu component */}
-      <MenuMobile />
+      <MenuMobile user={user} />
       <Routes>
         <Route path="/" element={<ImagesMobile images={images} />} />
         <Route
           path="/project/:project"
           element={<ImagesMobile images={images} />}
         />
-        <Route path="/:id" element={<Image image={image} />} />
+        <Route path="/:id" element={<Image user={user} image={image} />} />
       </Routes>
     </HomeMobileContainer>
   );
 };
 
-const Home = () => {
+const Home = ({ user }) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('tablet'));
 
@@ -66,8 +66,8 @@ const Home = () => {
 
   return (
     <div>
-      {!matches && <HomeDesktop images={images} image={image} />}
-      {matches && <HomeMobile images={images} image={image} />}
+      {!matches && <HomeDesktop user={user} images={images} image={image} />}
+      {matches && <HomeMobile user={user} images={images} image={image} />}
     </div>
   );
 };
