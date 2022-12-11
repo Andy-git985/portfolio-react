@@ -24,9 +24,9 @@ const MenuFixedContent = styled('div')(() => ({
 }));
 
 export const MenuDesktop = () => {
-  const userToken = useSelector(({ user }) => user.userToken);
-  if (userToken) {
-    postServices.setToken(userToken);
+  const user = useSelector(({ user }) => user);
+  if (user.loggedIn) {
+    postServices.setToken(user.userToken);
   }
   const dispatch = useDispatch();
   const setFilter = (filter) => {
@@ -39,9 +39,9 @@ export const MenuDesktop = () => {
         <div onClick={() => setFilter('editorial')}>Editorial</div>
         <div onClick={() => setFilter('advertising')}>Advertising</div>
         <div>Contact</div>
-        {userToken ? <LogoutButton /> : <LoginButton />}
-        {userToken && <UploadForm />}
-        {userToken && (
+        {user.loggedIn ? <LogoutButton /> : <LoginButton />}
+        {user.loggedIn && <UploadForm />}
+        {user.loggedIn && (
           <Link to="/edit">
             <div>Edit</div>
           </Link>
@@ -58,9 +58,9 @@ const MenuMobileContainer = styled('div')(() => ({
 }));
 
 export const MenuMobile = () => {
-  const userToken = useSelector(({ user }) => user.userToken);
-  if (userToken) {
-    postServices.setToken(userToken);
+  const user = useSelector(({ user }) => user);
+  if (user.loggedIn) {
+    postServices.setToken(user.userToken);
   }
   return (
     <div>
@@ -69,9 +69,9 @@ export const MenuMobile = () => {
         <div>Name</div>
         <DrawerMenu />
       </MenuMobileContainer>
-      {userToken ? <LogoutButton /> : <LoginButton />}
-      {userToken && <UploadForm />}
-      {userToken && (
+      {user.loggedIn ? <LogoutButton /> : <LoginButton />}
+      {user.loggedIn && <UploadForm />}
+      {user.loggedIn && (
         <Link to="/edit">
           <div>Edit</div>
         </Link>
