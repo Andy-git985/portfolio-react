@@ -25,16 +25,20 @@ const CustomImageListItem = styled(ImageListItem)(() => ({
 const CustomContainer = styled(Container)(() => ({
   paddingTop: '10px',
 }));
-export const ImagesDesktop = ({ images }) => {
+export const ImagesDesktop = ({ images, user }) => {
   return (
     <CustomContainer>
-      <Masonry variant="masonry" columns={3} spacing={2}>
+      <Masonry variant="masonry" columns={3} spacing={1}>
         {images.map((image) => {
           return (
             <div key={image.id}>
-              <Link to={`/${image.id}`}>
+              {user.loggedIn ? (
+                <Link to={`/${image.id}`}>
+                  <img src={image.image} alt={image.title}></img>
+                </Link>
+              ) : (
                 <img src={image.image} alt={image.title}></img>
-              </Link>
+              )}
             </div>
           );
         })}
@@ -54,17 +58,30 @@ export const ImagesDesktop = ({ images }) => {
   );
 };
 
-export const ImagesTablet = ({ images }) => {
+export const ImagesTablet = ({ images, user }) => {
   return (
-    <CustomImageList variant="masonry" cols={2} gap={8}>
-      {images.map((image) => {
-        return (
-          <CustomImageListItem key={image.id}>
-            <img src={image.image} alt={image.title}></img>
-          </CustomImageListItem>
-        );
-      })}
-    </CustomImageList>
+    <CustomContainer>
+      <Masonry variant="masonry" columns={2} spacing={1}>
+        {images.map((image) => {
+          return (
+            <div key={image.id}>
+              <Link to={`/${image.id}`}>
+                <img src={image.image} alt={image.title}></img>
+              </Link>
+            </div>
+          );
+        })}
+      </Masonry>
+    </CustomContainer>
+    // <CustomImageList variant="masonry" cols={2} gap={8}>
+    //   {images.map((image) => {
+    //     return (
+    //       <CustomImageListItem key={image.id}>
+    //         <img src={image.image} alt={image.title}></img>
+    //       </CustomImageListItem>
+    //     );
+    //   })}
+    // </CustomImageList>
   );
 };
 
@@ -74,7 +91,9 @@ export const ImagesMobile = ({ images }) => {
       {images.map((image) => {
         return (
           <div key={image.id}>
-            <img src={image.image} alt={image.title}></img>
+            <Link to={`/${image.id}`}>
+              <img src={image.image} alt={image.title}></img>
+            </Link>
           </div>
         );
       })}

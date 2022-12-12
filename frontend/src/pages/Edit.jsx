@@ -26,8 +26,11 @@ export const MenuDesktop = ({ user }) => {
   return (
     <MenuDesktopContainer>
       <MenuFixedContent>
-        <Link to="/edit/">
+        <Link to="/">
           <div>Name</div>
+        </Link>
+        <Link to="/edit/">
+          <div>All</div>
         </Link>
         <Link to="/edit/editorial">
           <div>Editorial</div>

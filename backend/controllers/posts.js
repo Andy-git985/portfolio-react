@@ -32,10 +32,6 @@ postsRouter.get('/edit', async (request, response) => {
 });
 
 postsRouter.post('/', upload.array('file', 10), async (request, response) => {
-  console.log('testing');
-  console.log('body', request.body);
-  console.log('files', request.files);
-  console.log('user', request.user);
   if (request.user === config.ADMIN_ID) {
     const files = request.files.map((file) =>
       cloudinary.uploader.upload(file.path)

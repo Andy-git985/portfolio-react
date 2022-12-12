@@ -24,10 +24,13 @@ const HomeDesktop = ({ images, image, user }) => {
       {/* Menu component */}
       <MenuDesktop user={user} />
       <Routes>
-        <Route path="/" element={<ImagesDesktop images={images} />} />
+        <Route
+          path="/"
+          element={<ImagesDesktop user={user} images={images} />}
+        />
         <Route
           path="/project/:project"
-          element={<ImagesDesktop images={images} />}
+          element={<ImagesDesktop user={user} images={images} />}
         />
         <Route path="/:id" element={<Image user={user} image={image} />} />
       </Routes>
