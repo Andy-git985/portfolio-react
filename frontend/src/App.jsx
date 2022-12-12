@@ -25,7 +25,7 @@ const App = () => {
         <Routes>
           <Route path="/*" element={<Home user={user} />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/edit" element={<Edit />} />
+            <Route path="/edit/*" element={<Edit user={user} />} />
           </Route>
         </Routes>
       </ThemeProvider>

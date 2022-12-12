@@ -2,27 +2,60 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../index.css';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { updatePostOrder } from '../reducers/postReducer';
+import { Container } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
-const OutlineContainer = styled('div')(() => ({
+const OutlineContainer = styled(Container)(() => ({
+  width: 'calc(100vw - 30%)',
   outline: '1px solid blue',
 }));
 
-const ImagesDraggable = () => {
+const ImagesDraggable = ({ posts, images }) => {
   const dispatch = useDispatch();
-  const images = useSelector(({ posts }) => {
-    return posts;
-  });
+  // const images = useSelector(({ posts }) => {
+  //   return posts;
+  // });
+  // const postOrder = posts;
+  console.log('posts', posts);
+  console.log('images', images);
+  console.log(posts !== images);
+  const imagesIndexArr = images.map((i) =>
+    posts.findIndex((p) => p.id === i.id)
+  );
+  console.log(imagesIndexArr);
+  // if posts !== images
+  // posts map if i = index.arr, item[0] pop else e
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
     const items = Array.from(images);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-    console.log(items);
+    console.log('items order', items);
+
+    if (posts !== images) {
+      items.reverse();
+      const indexArr = images
+        .map((i) => posts.findIndex((p) => p.id === i.id))
+        .reverse();
+      let updatedPosts = [];
+      for (let i = 0; i < posts.length; i++) {
+        if (i === indexArr.at(-1)) {
+          updatedPosts.push(items.at(-1));
+          items.pop();
+          indexArr.pop();
+        } else {
+          updatedPosts.push(posts[i]);
+        }
+      }
+      console.log('updated', updatedPosts);
+      dispatch(updatePostOrder(updatedPosts));
+    } else {
+      console.log('items', items);
+      dispatch(updatePostOrder(items));
+    }
 
     // updateCharacters(items);
-    dispatch(updatePostOrder(items));
   }
 
   return (

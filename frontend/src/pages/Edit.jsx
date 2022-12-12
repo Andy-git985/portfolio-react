@@ -1,16 +1,11 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useMatch, Link, Routes, Route } from 'react-router-dom';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import ImagesDraggable from '../components/ImagesDraggable';
-import UploadForm from '../components/UploadForm';
-import postServices from '../services/posts';
-
-const HomeDesktopContainer = styled('div')(() => ({
-  display: 'flex',
-  // justifyContent: 'space-between',
-}));
+import DrawerMenu from '../components/DrawerMenu';
+import LogoutButton from '../components/LogoutButton';
 
 const MenuDesktopContainer = styled('div')(() => ({
   width: 'calc(100vw - 70%)',
@@ -19,67 +14,117 @@ const MenuDesktopContainer = styled('div')(() => ({
   flexShrink: '0',
 }));
 
+const MenuFixedContent = styled('div')(() => ({
+  position: 'fixed',
+  width: 'calc(100vw - 85%)',
+  padding: '15px',
+  top: '0',
+  left: '0',
+}));
+
+export const MenuDesktop = ({ user }) => {
+  return (
+    <MenuDesktopContainer>
+      <MenuFixedContent>
+        <Link to="/edit/">
+          <div>Name</div>
+        </Link>
+        <Link to="/edit/editorial">
+          <div>Editorial</div>
+        </Link>
+        <Link to="/edit/advertising">
+          <div>Advertising</div>
+        </Link>
+        <div>Contact</div>
+        {user.loggedIn && <LogoutButton />}
+      </MenuFixedContent>
+    </MenuDesktopContainer>
+  );
+};
+
+const MenuMobileContainer = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '.625rem',
+}));
+
+export const MenuMobile = ({ user }) => {
+  return (
+    <div>
+      {/* extra div for now */}
+      <MenuMobileContainer>
+        <Link to="/edit/">
+          <div>Name</div>
+        </Link>
+        <DrawerMenu />
+      </MenuMobileContainer>
+      {user.loggedIn && <LogoutButton />}
+    </div>
+  );
+};
+
+const HomeDesktopContainer = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+}));
+
 const HomeMobileContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
+  gap: '1.25rem',
 }));
 
-const HomeDesktop = () => {
-  const userToken = useSelector(({ user }) => user.userToken);
-  if (userToken) {
-    postServices.setToken(userToken);
-  }
-
+const HomeDesktop = ({ images, posts, user }) => {
   return (
     <HomeDesktopContainer>
       {/* Menu component */}
-      <MenuDesktopContainer>
-        <div className="menu">
-          <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            nobis aperiam? Excepturi, quos incidunt voluptatem illo dolore nobis
-            eligendi deserunt, ducimus esse ullam autem sequi.
-          </div>
-          {userToken && (
-            <Link to="/">
-              <div>Home</div>
-            </Link>
-          )}
-        </div>
-      </MenuDesktopContainer>
-      <ImagesDraggable />
+      <MenuDesktop user={user} />
+      <Routes>
+        <Route
+          path="/"
+          element={<ImagesDraggable posts={posts} images={images} />}
+        />
+        <Route
+          path="/:project"
+          element={<ImagesDraggable posts={posts} images={images} />}
+        />
+      </Routes>
     </HomeDesktopContainer>
   );
 };
 
-const HomeMobile = () => {
+const HomeMobile = ({ images, posts, user }) => {
   return (
     <HomeMobileContainer>
-      {/* Menu Container */}
-      <div>
-        {/* Menu not needed for fixed */}
-        <div>
-          {/* Menu Links */}
-          <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-            nobis aperiam? Excepturi, quos incidunt voluptatem illo dolore nobis
-            eligendi deserunt, ducimus esse ullam autem sequi.
-          </div>
-          <UploadForm />
-        </div>
-      </div>
-      <ImagesDraggable />
+      {/* Menu component */}
+      <MenuMobile user={user} />
+      <Routes>
+        <Route
+          path="/"
+          element={<ImagesDraggable posts={posts} images={images} />}
+        />
+        <Route
+          path="/:project"
+          element={<ImagesDraggable posts={posts} images={images} />}
+        />
+      </Routes>
     </HomeMobileContainer>
   );
 };
 
-const Edit = () => {
+const Edit = ({ user }) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('tablet'));
+
+  const posts = useSelector(({ posts }) => posts);
+  const match = useMatch('/edit/:project');
+  const images = match
+    ? posts.filter((p) => p.project === match.params.project)
+    : posts;
   return (
     <div>
-      {!matches && <HomeDesktop />}
-      {matches && <HomeMobile />}
+      {!matches && <HomeDesktop user={user} posts={posts} images={images} />}
+      {matches && <HomeMobile user={user} posts={posts} images={images} />}
     </div>
   );
 };
