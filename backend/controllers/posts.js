@@ -19,16 +19,8 @@ postsRouter.get('/', async (request, response) => {
     title: 1,
     project: 1,
   });
-  response.json(posts.order);
-});
-
-postsRouter.get('/edit', async (request, response) => {
-  const posts = await Order.findOne({ name: 'posts' }).populate('order', {
-    image: 1,
-    title: 1,
-    project: 1,
-  });
-  response.json(posts.order);
+  const order = posts.order.slice().reverse();
+  response.json(order);
 });
 
 postsRouter.post('/', upload.array('file', 10), async (request, response) => {

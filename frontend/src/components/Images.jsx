@@ -28,7 +28,11 @@ const CustomContainer = styled(Container)(() => ({
 export const ImagesDesktop = ({ images, user }) => {
   return (
     <CustomContainer>
-      <Masonry variant="masonry" columns={3} spacing={1}>
+      <Masonry
+        variant="masonry"
+        columns={{ mobile: 1, tablet: 1, laptop: 2, desktop: 3 }}
+        spacing={1}
+      >
         {images.map((image) => {
           return (
             <div key={image.id}>
