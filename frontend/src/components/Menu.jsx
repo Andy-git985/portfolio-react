@@ -6,13 +6,13 @@ import Admin from './Admin';
 
 const MenuDesktopContainer = styled('div')(() => ({
   width: 'calc(100vw - 70%)',
-  height: '100vh',
+  // height: '100vh',
   outline: '1px solid blue',
   flexShrink: '0',
 }));
 
 const MenuFixedContent = styled('div')(() => ({
-  position: 'fixed',
+  position: 'sticky',
   width: 'calc(100vw - 85%)',
   padding: '15px',
   top: '0',

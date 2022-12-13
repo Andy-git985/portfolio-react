@@ -1,5 +1,5 @@
 import { Drawer, ListItem, ListItemText, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 
@@ -16,6 +16,10 @@ const Menu = styled('div')(() => ({
   padding: '1em',
 }));
 
+const activeStyle = {
+  color: 'Red',
+};
+
 const DrawerMenu = () => {
   const [open, setOpen] = useState(false);
 
@@ -23,9 +27,12 @@ const DrawerMenu = () => {
     <Menu onClick={() => setOpen(false)}>
       {data.map((item, index) => (
         <ListItem key={index}>
-          <Link to={item.route}>
+          <NavLink
+            to={item.route}
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
             <ListItemText primary={item.name} />
-          </Link>
+          </NavLink>
         </ListItem>
       ))}
     </Menu>

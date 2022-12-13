@@ -1,79 +1,132 @@
-import { useForm } from 'react-hook-form';
-import { useField } from '../hooks';
+import { useEffect, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import {
+  InputLabel,
+  MenuItem,
+  FormControl,
+  TextField,
+  Select,
+  Button,
+} from '@mui/material/';
+import Preview from './Preview';
 import { createPost } from '../reducers/postReducer';
 
-const UploadForm = (props) => {
-  // const [images, setImages] = useState([]);
-  const title = useField('text');
-  const project = useField();
-  const projects = ['editorial', 'advertising', 'video'];
-  const { register, handleSubmit } = useForm();
+const UploadForm = () => {
   const dispatch = useDispatch();
+  const {
+    control,
+    register,
+    handleSubmit,
+    reset,
+    formState,
+    formState: { isSubmitSuccessful },
+  } = useForm({
+    defaultValues: {
+      title: '',
+      project: '',
+      file: undefined,
+    },
+  });
+  const [images, setImages] = useState([]);
 
-  const addPost = (data) => {
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset({ title: '', project: '', file: undefined });
+    }
+  }, [formState, reset]);
+
+  const onSubmit = (data) => {
     const formData = new FormData();
     for (const image of data.file) {
       formData.append('file', image);
     }
     formData.append('title', data.title);
     formData.append('project', data.project);
-    dispatch(createPost(formData));
+    setImages([]);
     console.log(formData);
-  };
-
-  // const handleFileChange = (e) => {
-  //   setImages(e.target.files);
-  // };
-
-  // const handleReset = () => {
-  //   title.reset();
-  //   project.reset();
-  //   setImages('');
-  // };
-
-  const Select = ({ value, onChange, optionValues }) => {
-    return (
-      <select value={value} onChange={onChange}>
-        <option>Select project</option>
-        {optionValues.map((optionValue, i) => {
-          return (
-            <option key={`${value}-${optionValue}-${i}`} value={optionValue}>
-              {optionValue}
-            </option>
-          );
-        })}
-      </select>
-    );
+    // dispatch(createPost(formData));
   };
 
   return (
-    <div>
-      <h5>Upload to server</h5>
-
-      <form onSubmit={handleSubmit(addPost)} encType="multipart/form">
-        {/* <input {...title.fields} {...register('title')} /> */}
-        <input type="text" {...register('title')}></input>
-        {/* <Select
-          {...project.fields}
-          optionValues={projects}
-          {...register('project')}
-        /> */}
-        <select {...register('project')}>
-          <option>Select project</option>
-          <option value="editorial">Editorial</option>
-          <option value="advertising">Advertising</option>
-        </select>
-        <input
-          type="file"
-          name="file"
-          // onChange={handleFileChange}
-          multiple
-          {...register('file')}
-        ></input>
-        <button type="submit">Submit</button>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form">
+        <div>
+          <TextField
+            label="Title"
+            variant="outlined"
+            {...register('title')}
+            style={{ width: '150px', margin: '5px' }}
+          />
+        </div>
+        <div>
+          <Controller
+            name="project"
+            render={({ field }) => (
+              <>
+                <FormControl style={{ width: '150px', margin: '5px' }}>
+                  <InputLabel>Project</InputLabel>
+                  <Select {...field} label="project">
+                    <MenuItem value="editorial">Editorial</MenuItem>
+                    <MenuItem value="advertising">Advertising</MenuItem>
+                  </Select>
+                </FormControl>
+              </>
+            )}
+            control={control}
+            defaultValue=""
+          />
+        </div>
+        <div>
+          <Button
+            variant="contained"
+            component="label"
+            style={{ width: '150px', margin: '5px' }}
+          >
+            Upload File
+            <input
+              type="file"
+              hidden
+              multiple
+              {...register('file')}
+              onChange={(event) => {
+                setImages([]);
+                let arr = [];
+                for (const file of event.target.files) {
+                  const preview = URL.createObjectURL(file);
+                  arr.push(preview);
+                }
+                setImages(arr);
+                register('file').onChange(event);
+              }}
+            />
+          </Button>
+        </div>
+        <div>
+          <Button
+            type="button"
+            onClick={() => {
+              reset();
+              setImages([]);
+            }}
+            variant="contained"
+            style={{ width: '150px', margin: '5px' }}
+          >
+            Reset
+          </Button>
+        </div>
+        <div>
+          <Button
+            type="submit"
+            variant="contained"
+            style={{ width: '150px', margin: '5px' }}
+          >
+            Submit
+          </Button>
+        </div>
       </form>
-    </div>
+      {images.length > 0 && <Preview images={images} />}
+    </>
   );
 };
 
