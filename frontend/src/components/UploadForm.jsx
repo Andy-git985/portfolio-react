@@ -11,7 +11,7 @@ const UploadForm = (props) => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
 
-  const addPost = async (data) => {
+  const addPost = (data) => {
     const formData = new FormData();
     for (const image of data.file) {
       formData.append('file', image);

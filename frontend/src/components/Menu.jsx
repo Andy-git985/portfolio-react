@@ -19,7 +19,7 @@ const MenuFixedContent = styled('div')(() => ({
   left: '0',
 }));
 
-const active = {
+const activeStyle = {
   color: 'Red',
 };
 
@@ -30,10 +30,16 @@ export const MenuDesktop = ({ user }) => {
         <Link to="/">
           <div>Name</div>
         </Link>
-        <NavLink to="/project/editorial" activeClassName={active}>
+        <NavLink
+          to="/project/editorial"
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
           <div>Editorial</div>
         </NavLink>
-        <NavLink to="/project/advertising" activeClassName={active}>
+        <NavLink
+          to="/project/advertising"
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
           <div>Advertising</div>
         </NavLink>
         <div>Contact</div>
