@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import DrawerMenu from './DrawerMenu';
 import LoginButton from './LoginButton';
@@ -19,6 +19,10 @@ const MenuFixedContent = styled('div')(() => ({
   left: '0',
 }));
 
+const active = {
+  color: 'Red',
+};
+
 export const MenuDesktop = ({ user }) => {
   return (
     <MenuDesktopContainer>
@@ -26,12 +30,12 @@ export const MenuDesktop = ({ user }) => {
         <Link to="/">
           <div>Name</div>
         </Link>
-        <Link to="/project/editorial">
+        <NavLink to="/project/editorial" activeClassName={active}>
           <div>Editorial</div>
-        </Link>
-        <Link to="/project/advertising">
+        </NavLink>
+        <NavLink to="/project/advertising" activeClassName={active}>
           <div>Advertising</div>
-        </Link>
+        </NavLink>
         <div>Contact</div>
         {user.loggedIn ? <Admin /> : <LoginButton />}
       </MenuFixedContent>
