@@ -17,9 +17,10 @@ const ImageDiv = styled('div')(() => ({
 }));
 const CustomIconButton = styled(IconButton)(() => ({
   position: 'absolute',
-  left: '0%',
-  top: '0%',
+  left: '1.25%',
+  top: '1.25%',
   color: 'black',
+  backgroundColor: 'grey',
 }));
 const Image = ({ image, user }) => {
   const navigate = useNavigate();

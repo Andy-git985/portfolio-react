@@ -5,15 +5,17 @@ import LoginButton from './LoginButton';
 import Admin from './Admin';
 
 const MenuDesktopContainer = styled('div')(() => ({
-  width: 'calc(100vw - 70%)',
-  // height: '100vh',
+  // width: 'calc(100vw - 70%)',
+  width: '30%',
+  height: '100vh',
   outline: '1px solid blue',
   flexShrink: '0',
 }));
 
 const MenuFixedContent = styled('div')(() => ({
-  position: 'sticky',
-  width: 'calc(100vw - 85%)',
+  position: 'fixed',
+  // width: 'calc(100vw - 85%)',
+  // width: '100%',
   padding: '15px',
   top: '0',
   left: '0',

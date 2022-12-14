@@ -4,7 +4,8 @@ import Masonry from '@mui/lab/Masonry';
 import { Container, ImageList, ImageListItem } from '@mui/material';
 
 const CustomImageList = styled(ImageList)(() => ({
-  width: 'calc(100vw - 30%)',
+  // width: 'calc(100vw - 30%)',
+  width: '70%',
   flexShrink: '0',
   marginInline: 'auto',
 }));

@@ -13,6 +13,8 @@ import {
 import Preview from './Preview';
 import { createPost } from '../reducers/postReducer';
 
+const fieldStyle = { height: '20px', width: '150px', margin: '5px' };
+
 const UploadForm = () => {
   const dispatch = useDispatch();
   const {

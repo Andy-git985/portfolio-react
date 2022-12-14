@@ -3,7 +3,6 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const Preview = ({ images, removePreview }) => {
   const flex = {
-    width: 'calc(100vw - 95%)',
     display: 'Flex',
     flexWrap: 'Wrap',
     gap: '5px',
@@ -12,7 +11,7 @@ const Preview = ({ images, removePreview }) => {
   const container = {
     position: 'relative',
     outline: '1px solid red',
-    overflowY: 'unset',
+    // overflowY: 'unset',
     width: '100px',
     // backgroundColor: 'Red',
     // zIndex: '2',
@@ -20,8 +19,10 @@ const Preview = ({ images, removePreview }) => {
 
   const button = {
     position: 'absolute',
-    left: '95%',
-    top: '-9%',
+    left: '1.25%',
+    top: '1.25%',
+    color: 'black',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   };
 
   // const overlay = {
@@ -30,13 +31,18 @@ const Preview = ({ images, removePreview }) => {
   //   zIndex: '2',
   // };
 
+  const parent = {
+    outline: '1px solid red',
+    width: '50%',
+  };
+
   const handleClick = (index) => {
     const updatedImages = images.filter((_, i) => i !== index);
     removePreview(updatedImages);
   };
 
   return (
-    <>
+    <div style={parent}>
       <h5>Preview</h5>
       <div style={flex}>
         {images.map((image, i) => (
@@ -49,7 +55,7 @@ const Preview = ({ images, removePreview }) => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
