@@ -9,6 +9,7 @@ import {
   Select,
   Button,
 } from '@mui/material/';
+// import CheckIcon from '@mui/icons-material/Check';
 import Preview from './Preview';
 import { createPost } from '../reducers/postReducer';
 
@@ -136,6 +137,7 @@ const UploadForm = () => {
       {images.length > 0 && (
         <Preview images={images} removePreview={removePreview} />
       )}
+      {/* <CheckIcon /> */}
     </>
   );
 };
