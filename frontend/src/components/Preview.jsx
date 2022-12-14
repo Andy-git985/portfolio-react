@@ -6,15 +6,25 @@ const Preview = ({ images, removePreview }) => {
     display: 'Flex',
     flexWrap: 'Wrap',
     gap: '5px',
+    width: '100%',
+    outline: '1px solid red',
+  };
+  const grid = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+    gap: '5px',
+    padding: '.5em',
+    outline: '1px solid red',
   };
 
-  const container = {
+  const child = {
     position: 'relative',
-    outline: '1px solid red',
+    // outline: '1px solid red',
     // overflowY: 'unset',
     width: '100px',
     // backgroundColor: 'Red',
     // zIndex: '2',
+    flex: '0 1 auto',
   };
 
   const button = {
@@ -22,7 +32,7 @@ const Preview = ({ images, removePreview }) => {
     left: '1.25%',
     top: '1.25%',
     color: 'black',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(255,255,255,0.5)',
   };
 
   // const overlay = {
@@ -33,7 +43,8 @@ const Preview = ({ images, removePreview }) => {
 
   const parent = {
     outline: '1px solid red',
-    width: '50%',
+    // width: '100%',
+    backgroundColor: 'blue',
   };
 
   const handleClick = (index) => {
@@ -46,7 +57,7 @@ const Preview = ({ images, removePreview }) => {
       <h5>Preview</h5>
       <div style={flex}>
         {images.map((image, i) => (
-          <div key={`image-preview-${i}`} style={container}>
+          <div key={`image-preview-${i}`} style={child}>
             <img src={image.preview} alt="preview" />
             <IconButton style={button} onClick={() => handleClick(i)}>
               <CloseIcon />

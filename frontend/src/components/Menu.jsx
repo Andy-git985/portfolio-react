@@ -6,19 +6,22 @@ import Admin from './Admin';
 
 const MenuDesktopContainer = styled('div')(() => ({
   // width: 'calc(100vw - 70%)',
-  width: '30%',
-  height: '100vh',
-  outline: '1px solid blue',
-  flexShrink: '0',
+  // width: '30%',
+  // height: '100vh',
+  // outline: '1px solid blue',
+  // flexShrink: '0',
+  position: 'sticky',
+  top: '1rem',
+  backgroundColor: 'yellow',
 }));
 
 const MenuFixedContent = styled('div')(() => ({
-  position: 'fixed',
+  // position: 'fixed',
   // width: 'calc(100vw - 85%)',
   // width: '100%',
-  padding: '15px',
-  top: '0',
-  left: '0',
+  // padding: '15px',
+  // top: '0',
+  // left: '0',
 }));
 
 const activeStyle = {

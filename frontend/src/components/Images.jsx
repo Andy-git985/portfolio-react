@@ -28,27 +28,28 @@ const CustomContainer = styled(Container)(() => ({
 }));
 export const ImagesDesktop = ({ images, user }) => {
   return (
-    <CustomContainer>
-      <Masonry
-        variant="masonry"
-        columns={{ mobile: 1, tablet: 1, laptop: 2, desktop: 3 }}
-        spacing={1}
-      >
-        {images.map((image) => {
-          return (
-            <div key={image.id}>
-              {user.loggedIn ? (
-                <Link to={`/${image.id}`}>
-                  <img src={image.image} alt={image.title}></img>
-                </Link>
-              ) : (
+    // <CustomContainer>
+    <Masonry
+      variant="masonry"
+      columns={{ mobile: 1, tablet: 1, laptop: 2, desktop: 3 }}
+      spacing={1}
+    >
+      {images.map((image) => {
+        return (
+          <div key={image.id}>
+            {user.loggedIn ? (
+              <Link to={`/${image.id}`}>
                 <img src={image.image} alt={image.title}></img>
-              )}
-            </div>
-          );
-        })}
-      </Masonry>
-    </CustomContainer>
+              </Link>
+            ) : (
+              <img src={image.image} alt={image.title}></img>
+            )}
+          </div>
+        );
+      })}
+    </Masonry>
+    // </CustomContainer>
+
     // <CustomImageList variant="masonry" cols={3} gap={8}>
     //   {images.map((image) => {
     //     return (
