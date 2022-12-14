@@ -29,6 +29,7 @@ const UploadForm = () => {
     },
   });
   const [images, setImages] = useState([]);
+  console.log(images);
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
@@ -38,14 +39,18 @@ const UploadForm = () => {
 
   const onSubmit = (data) => {
     const formData = new FormData();
-    for (const image of data.file) {
-      formData.append('file', image);
+    for (const image of images) {
+      formData.append('file', image.data);
     }
     formData.append('title', data.title);
     formData.append('project', data.project);
     setImages([]);
     console.log(formData);
-    // dispatch(createPost(formData));
+    dispatch(createPost(formData));
+  };
+
+  const removePreview = (updatedObj) => {
+    setImages(updatedObj);
   };
 
   return (
@@ -93,8 +98,11 @@ const UploadForm = () => {
                 setImages([]);
                 let arr = [];
                 for (const file of event.target.files) {
-                  const preview = URL.createObjectURL(file);
-                  arr.push(preview);
+                  const img = {
+                    preview: URL.createObjectURL(file),
+                    data: file,
+                  };
+                  arr.push(img);
                 }
                 setImages(arr);
                 register('file').onChange(event);
@@ -125,7 +133,9 @@ const UploadForm = () => {
           </Button>
         </div>
       </form>
-      {images.length > 0 && <Preview images={images} />}
+      {images.length > 0 && (
+        <Preview images={images} removePreview={removePreview} />
+      )}
     </>
   );
 };
