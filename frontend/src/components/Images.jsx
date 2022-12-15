@@ -91,15 +91,19 @@ export const ImagesTablet = ({ images, user }) => {
   );
 };
 
-export const ImagesMobile = ({ images }) => {
+export const ImagesMobile = ({ images, user }) => {
   return (
     <div>
       {images.map((image) => {
         return (
           <div key={image.id}>
-            <Link to={`/${image.id}`}>
+            {user.loggedIn ? (
+              <Link to={`/${image.id}`}>
+                <img src={image.image} alt={image.title}></img>
+              </Link>
+            ) : (
               <img src={image.image} alt={image.title}></img>
-            </Link>
+            )}
           </div>
         );
       })}

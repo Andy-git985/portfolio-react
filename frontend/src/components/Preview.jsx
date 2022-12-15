@@ -60,7 +60,7 @@ const Preview = ({ images, removePreview }) => {
           <div key={`image-preview-${i}`} style={child}>
             <img src={image.preview} alt="preview" />
             <IconButton style={button} onClick={() => handleClick(i)}>
-              <CloseIcon />
+              <CloseIcon sx={{ fontSize: 15 }} />
             </IconButton>
             {/* <div style={overlay}></div> */}
           </div>

@@ -13,7 +13,7 @@ import {
 import Preview from './Preview';
 import { createPost } from '../reducers/postReducer';
 
-const fieldStyle = { height: '20px', width: '150px', margin: '5px' };
+const fieldStyle = { width: '150px', margin: '5px' };
 
 const UploadForm = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,6 @@ const UploadForm = () => {
     },
   });
   const [images, setImages] = useState([]);
-  console.log(images);
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
@@ -48,7 +47,6 @@ const UploadForm = () => {
     formData.append('title', data.title);
     formData.append('project', data.project);
     setImages([]);
-    console.log(formData);
     dispatch(createPost(formData));
   };
 
@@ -64,7 +62,7 @@ const UploadForm = () => {
             label="Title"
             variant="outlined"
             {...register('title')}
-            style={{ width: '150px', margin: '5px' }}
+            style={fieldStyle}
           />
         </div>
         <div>
@@ -72,7 +70,7 @@ const UploadForm = () => {
             name="project"
             render={({ field }) => (
               <>
-                <FormControl style={{ width: '150px', margin: '5px' }}>
+                <FormControl style={fieldStyle}>
                   <InputLabel>Project</InputLabel>
                   <Select {...field} label="project">
                     <MenuItem value="editorial">Editorial</MenuItem>
@@ -86,11 +84,7 @@ const UploadForm = () => {
           />
         </div>
         <div>
-          <Button
-            variant="contained"
-            component="label"
-            style={{ width: '150px', margin: '5px' }}
-          >
+          <Button variant="contained" component="label" style={fieldStyle}>
             Upload File
             <input
               type="file"
@@ -121,17 +115,13 @@ const UploadForm = () => {
               setImages([]);
             }}
             variant="contained"
-            style={{ width: '150px', margin: '5px' }}
+            style={fieldStyle}
           >
             Reset
           </Button>
         </div>
         <div>
-          <Button
-            type="submit"
-            variant="contained"
-            style={{ width: '150px', margin: '5px' }}
-          >
+          <Button type="submit" variant="contained" style={fieldStyle}>
             Submit
           </Button>
         </div>
