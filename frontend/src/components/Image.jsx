@@ -36,7 +36,7 @@ const Image = ({ image, user }) => {
         <CustomIconButton onClick={handleClick}>
           <CloseIcon />
         </CustomIconButton>
-        {user.loggedIn && <AdminButtons id={image.id} />}
+        {user.loggedIn && <AdminButtons image={image} id={image.id} />}
       </ImageDiv>
     </ImageContainer>
   );

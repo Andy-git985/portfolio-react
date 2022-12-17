@@ -17,6 +17,7 @@ postsRouter.get('/', async (request, response) => {
   const posts = await Order.findOne({ name: 'posts' }).populate('order', {
     image: 1,
     title: 1,
+    type: 1,
     project: 1,
   });
   const order = posts.order.slice().reverse();
@@ -34,6 +35,7 @@ postsRouter.post('/', upload.array('file', 10), async (request, response) => {
         new Post({
           title: `${request.body.title}-${index + 1}`,
           image: result.secure_url,
+          type: request.body.type,
           project: request.body.project,
           cloudinaryId: result.public_id,
           createdAt: new Date(),
@@ -45,6 +47,20 @@ postsRouter.post('/', upload.array('file', 10), async (request, response) => {
     postsOrder.order.push(...savedPosts);
     await postsOrder.save();
     response.status(201).json(savedPosts);
+  } else {
+    response.status(401).json({ error: 'unauthorized user' });
+  }
+});
+
+postsRouter.put('/:id', async (request, response) => {
+  if (request.user === config.ADMIN_ID) {
+    const updatedPost = await Post.findByIdAndUpdate(
+      request.params.id,
+      request.body,
+      { new: true }
+    );
+    await updatedPost.save();
+    response.status(200).json(updatedPost);
   } else {
     response.status(401).json({ error: 'unauthorized user' });
   }

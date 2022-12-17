@@ -1,7 +1,9 @@
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import {
+  Autocomplete,
   InputLabel,
   MenuItem,
   FormControl,
@@ -12,10 +14,13 @@ import {
 // import CheckIcon from '@mui/icons-material/Check';
 import Preview from './Preview';
 import { createPost } from '../reducers/postReducer';
+import posts from '../services/posts';
 
 const fieldStyle = { width: '150px', margin: '5px' };
 
 const UploadForm = () => {
+  const projects = useSelector(({ posts }) => posts.project);
+  console.log('projects', projects);
   const dispatch = useDispatch();
   const {
     control,
@@ -27,6 +32,7 @@ const UploadForm = () => {
   } = useForm({
     defaultValues: {
       title: '',
+      type: '',
       project: '',
       file: undefined,
     },
@@ -35,7 +41,7 @@ const UploadForm = () => {
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
-      reset({ title: '', project: '', file: undefined });
+      reset({ title: '', type: '', project: '', file: undefined });
     }
   }, [formState, reset]);
 
@@ -45,9 +51,11 @@ const UploadForm = () => {
       formData.append('file', image.data);
     }
     formData.append('title', data.title);
+    formData.append('type', data.type);
     formData.append('project', data.project);
     setImages([]);
-    dispatch(createPost(formData));
+    console.log(formData);
+    // dispatch(createPost(formData));
   };
 
   const removePreview = (updatedObj) => {
@@ -67,12 +75,12 @@ const UploadForm = () => {
         </div>
         <div>
           <Controller
-            name="project"
+            name="type"
             render={({ field }) => (
               <>
                 <FormControl style={fieldStyle}>
-                  <InputLabel>Project</InputLabel>
-                  <Select {...field} label="project">
+                  <InputLabel>Type</InputLabel>
+                  <Select {...field} label="type">
                     <MenuItem value="editorial">Editorial</MenuItem>
                     <MenuItem value="advertising">Advertising</MenuItem>
                   </Select>
@@ -81,6 +89,29 @@ const UploadForm = () => {
             )}
             control={control}
             defaultValue=""
+          />
+        </div>
+        <div>
+          <Controller
+            control={control}
+            name="project"
+            render={({ field: { onChange, value } }) => (
+              <Autocomplete
+                freeSolo
+                options={['field', 'select', 'multiple', 'date']}
+                onChange={(event, values) => onChange(values)}
+                value={value}
+                renderInput={(params) => (
+                  <TextField
+                    style={fieldStyle}
+                    {...params}
+                    label="Project"
+                    variant="outlined"
+                    onChange={onChange}
+                  />
+                )}
+              />
+            )}
           />
         </div>
         <div>

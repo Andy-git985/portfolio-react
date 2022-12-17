@@ -45,6 +45,7 @@ const Preview = ({ images, removePreview }) => {
     outline: '1px solid red',
     // width: '100%',
     backgroundColor: 'blue',
+    padding: '.5em',
   };
 
   const handleClick = (index) => {
