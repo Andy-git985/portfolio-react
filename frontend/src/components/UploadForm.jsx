@@ -19,8 +19,12 @@ import posts from '../services/posts';
 const fieldStyle = { width: '150px', margin: '5px' };
 
 const UploadForm = () => {
-  const projects = useSelector(({ posts }) => posts.project);
-  console.log('projects', projects);
+  const projects = useSelector(({ posts }) => posts).reduce((acc, curr) => {
+    if (!acc.includes(curr.project)) {
+      return [...acc, curr.project];
+    }
+    return acc;
+  }, []);
   const dispatch = useDispatch();
   const {
     control,
@@ -98,7 +102,7 @@ const UploadForm = () => {
             render={({ field: { onChange, value } }) => (
               <Autocomplete
                 freeSolo
-                options={['field', 'select', 'multiple', 'date']}
+                options={projects}
                 onChange={(event, values) => onChange(values)}
                 value={value}
                 renderInput={(params) => (

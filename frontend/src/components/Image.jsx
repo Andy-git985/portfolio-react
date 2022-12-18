@@ -26,7 +26,7 @@ const Image = ({ image, user }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/');
+    navigate(-1);
   };
 
   return (

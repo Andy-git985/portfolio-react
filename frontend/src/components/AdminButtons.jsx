@@ -7,7 +7,7 @@ import {
   Select,
   Button,
 } from '@mui/material/';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { updatePost, removePost } from '../reducers/postReducer';
@@ -17,6 +17,14 @@ const fieldStyle = { width: '150px', margin: '5px' };
 const AdminButtons = ({ image }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const projects = useSelector(({ posts }) => posts).reduce((acc, curr) => {
+    if (!acc.includes(curr.project)) {
+      return [...acc, curr.project];
+    }
+    return acc;
+  }, []);
+
   const { control, register, handleSubmit } = useForm({
     defaultValues: {
       title: image.title,
@@ -33,6 +41,7 @@ const AdminButtons = ({ image }) => {
     dispatch(removePost(image.id));
     navigate('/');
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit(update)}>
@@ -64,7 +73,7 @@ const AdminButtons = ({ image }) => {
             render={({ field: { onChange, value } }) => (
               <Autocomplete
                 freeSolo
-                options={['field', 'select', 'multiple', 'date']}
+                options={projects}
                 onChange={(event, values) => onChange(values)}
                 value={value}
                 renderInput={(params) => (
