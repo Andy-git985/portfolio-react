@@ -87,7 +87,6 @@ postsRouter.delete('/:id', async (request, response) => {
     const newOrder = postsOrder.order.filter(
       (p) => p.toString() !== request.params.id
     );
-    console.log(newOrder);
     postsOrder.order = newOrder;
     await postsOrder.save();
     response.status(204).end();

@@ -58,8 +58,7 @@ const UploadForm = () => {
     formData.append('type', data.type);
     formData.append('project', data.project);
     setImages([]);
-    console.log(formData);
-    // dispatch(createPost(formData));
+    dispatch(createPost(formData));
   };
 
   const removePreview = (updatedObj) => {

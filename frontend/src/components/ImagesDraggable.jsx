@@ -11,18 +11,19 @@ const OutlineContainer = styled(Container)(() => ({
 }));
 
 const ImagesDraggable = ({ posts, images }) => {
+  console.log(images);
   const dispatch = useDispatch();
   // const images = useSelector(({ posts }) => {
   //   return posts;
   // });
   // const postOrder = posts;
-  console.log('posts', posts);
-  console.log('images', images);
-  console.log(posts !== images);
-  const imagesIndexArr = images.map((i) =>
-    posts.findIndex((p) => p.id === i.id)
-  );
-  console.log(imagesIndexArr);
+  // console.log('posts', posts);
+  // console.log('images', images);
+  // console.log(posts !== images);
+  // const imagesIndexArr = images.map((i) =>
+  //   posts.findIndex((p) => p.id === i.id)
+  // );
+  // console.log(imagesIndexArr);
   // if posts !== images
   // posts map if i = index.arr, item[0] pop else e
 
@@ -31,7 +32,7 @@ const ImagesDraggable = ({ posts, images }) => {
     const items = Array.from(images);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-    console.log('items order', items);
+    // console.log('items order', items);
 
     if (posts !== images) {
       items.reverse();
@@ -48,10 +49,10 @@ const ImagesDraggable = ({ posts, images }) => {
           updatedPosts.push(posts[i]);
         }
       }
-      console.log('updated', updatedPosts);
+      // console.log('updated', updatedPosts);
       dispatch(updatePostOrder(updatedPosts));
     } else {
-      console.log('items', items);
+      // console.log('items', items);
       dispatch(updatePostOrder(items));
     }
 

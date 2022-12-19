@@ -1,11 +1,13 @@
 import { useSelector } from 'react-redux';
-import { useMatch, Link, Routes, Route } from 'react-router-dom';
+import { useMatch, Link, NavLink, Routes, Route } from 'react-router-dom';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import ImagesDraggable from '../components/ImagesDraggable';
+import ProjectsDraggable from '../components/ProjectsDraggable';
 import DrawerMenu from '../components/DrawerMenu';
 import LogoutButton from '../components/LogoutButton';
+import { groupByProj } from '../utils';
 
 const MenuDesktopContainer = styled('div')(() => ({
   width: 'calc(100vw - 70%)',
@@ -22,6 +24,10 @@ const MenuFixedContent = styled('div')(() => ({
   left: '0',
 }));
 
+const activeStyle = {
+  color: 'Red',
+};
+
 export const MenuDesktop = ({ user }) => {
   return (
     <MenuDesktopContainer>
@@ -29,15 +35,30 @@ export const MenuDesktop = ({ user }) => {
         <Link to="/">
           <div>Name</div>
         </Link>
-        <Link to="/edit/">
+        <NavLink
+          to="/edit/"
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
           <div>All</div>
-        </Link>
-        <Link to="/edit/editorial">
+        </NavLink>
+        <NavLink
+          to="/edit/type/editorial"
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
           <div>Editorial</div>
-        </Link>
-        <Link to="/edit/advertising">
+        </NavLink>
+        <NavLink
+          to="/edit/type/advertising"
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
           <div>Advertising</div>
-        </Link>
+        </NavLink>
+        <NavLink
+          to="/edit/projects"
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
+          <div>Projects</div>
+        </NavLink>
         <div>Contact</div>
         {user.loggedIn && <LogoutButton />}
       </MenuFixedContent>
@@ -77,7 +98,7 @@ const HomeMobileContainer = styled('div')(() => ({
   gap: '1.25rem',
 }));
 
-const HomeDesktop = ({ images, posts, user }) => {
+const HomeDesktop = ({ images, posts, user, projects }) => {
   return (
     <HomeDesktopContainer>
       {/* Menu component */}
@@ -88,8 +109,12 @@ const HomeDesktop = ({ images, posts, user }) => {
           element={<ImagesDraggable posts={posts} images={images} />}
         />
         <Route
-          path="/:project"
+          path="/type/:type"
           element={<ImagesDraggable posts={posts} images={images} />}
+        />
+        <Route
+          path="/projects"
+          element={<ProjectsDraggable projects={projects} />}
         />
       </Routes>
     </HomeDesktopContainer>
@@ -107,7 +132,7 @@ const HomeMobile = ({ images, posts, user }) => {
           element={<ImagesDraggable posts={posts} images={images} />}
         />
         <Route
-          path="/:project"
+          path="/type/:type"
           element={<ImagesDraggable posts={posts} images={images} />}
         />
       </Routes>
@@ -120,13 +145,24 @@ const Edit = ({ user }) => {
   const matches = useMediaQuery(theme.breakpoints.down('tablet'));
 
   const posts = useSelector(({ posts }) => posts);
-  const match = useMatch('/edit/:project');
+  console.log(posts);
+  const match = useMatch('/edit/type/:type');
   const images = match
-    ? posts.filter((p) => p.project === match.params.project)
+    ? posts.filter((p) => p.type === match.params.type)
     : posts;
+  // project testing
+  const projects = groupByProj(posts);
+
   return (
     <div>
-      {!matches && <HomeDesktop user={user} posts={posts} images={images} />}
+      {!matches && (
+        <HomeDesktop
+          user={user}
+          posts={posts}
+          images={images}
+          projects={projects}
+        />
+      )}
       {matches && <HomeMobile user={user} posts={posts} images={images} />}
     </div>
   );
