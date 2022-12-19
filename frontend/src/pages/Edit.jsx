@@ -114,7 +114,7 @@ const HomeDesktop = ({ images, posts, user, projects }) => {
         />
         <Route
           path="/projects"
-          element={<ProjectsDraggable projects={projects} />}
+          element={<ProjectsDraggable posts={posts} projects={projects} />}
         />
       </Routes>
     </HomeDesktopContainer>

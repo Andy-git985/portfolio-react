@@ -11,15 +11,30 @@ const OutlineContainer = styled(Container)(() => ({
   outline: '1px solid blue',
 }));
 
-const ProjectsDraggable = ({ projects }) => {
+const ProjectsDraggable = ({ posts, projects }) => {
   const dispatch = useDispatch();
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
-    // const items = Array.from(images);
+    // var arr = [1, 2, 3, 4, 5, 6, 7, 8];
+    // var end = arr.splice(3, 5);
+    // arr.splice(0, 0, ...end);
+
+    const items = Array.from(posts);
     // const [reorderedItem] = items.splice(result.source.index, 1);
     // items.splice(result.destination.index, 0, reorderedItem);
 
+    const startIndex = projects[result.source.index].start;
+    const numOfValues = projects[result.source.index].values.length;
+    const endIndex = projects[result.destination.index].start;
+    const reorderedProjects = items.splice(startIndex, numOfValues);
+    console.log(reorderedProjects);
+    items.splice(endIndex, 0, ...reorderedProjects);
+    items.forEach((p, i) => {
+      console.log(i);
+      console.log(p.project);
+    });
+    console.log(items.length);
     // if (posts !== images) {
     //   items.reverse();
     //   const indexArr = images
@@ -37,9 +52,8 @@ const ProjectsDraggable = ({ projects }) => {
     //   }
     //   dispatch(updatePostOrder(updatedPosts));
     // } else {
-    //   dispatch(updatePostOrder(items));
+    dispatch(updatePostOrder(items));
     // }
-    console.log('testing');
   }
 
   return (
@@ -54,9 +68,13 @@ const ProjectsDraggable = ({ projects }) => {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {projects.map((e, index) => {
+                {projects.map(({ start, project, values }, index) => {
                   return (
-                    <Draggable key={index} draggableId={index} index={index}>
+                    <Draggable
+                      key={`${project}-${start}`}
+                      draggableId={`${project}-${start}`}
+                      index={index}
+                    >
                       {(provided) => (
                         <li
                           ref={provided.innerRef}
@@ -64,10 +82,13 @@ const ProjectsDraggable = ({ projects }) => {
                           {...provided.dragHandleProps}
                         >
                           <div className="characters-thumb">
-                            <img src={e[0].image} alt={`${e[0].image} Thumb`} />
+                            <img
+                              src={values[0].image}
+                              alt={`${values[0].image} Thumb`}
+                            />
                             <div>{index}</div>
                           </div>
-                          <p>{e[0].project}</p>
+                          <p>{values[0].project}</p>
                           <button onClick={() => console.log('hello')}>
                             Click Me
                           </button>
