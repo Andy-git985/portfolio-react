@@ -36,13 +36,13 @@ export const MenuDesktop = ({ user }) => {
           <div>Name</div>
         </Link>
         <NavLink
-          to="/project/editorial"
+          to="/type/editorial"
           style={({ isActive }) => (isActive ? activeStyle : undefined)}
         >
           <div>Editorial</div>
         </NavLink>
         <NavLink
-          to="/project/advertising"
+          to="/type/advertising"
           style={({ isActive }) => (isActive ? activeStyle : undefined)}
         >
           <div>Advertising</div>

@@ -53,7 +53,7 @@ const HomeDesktop = ({ images, image, user }) => {
             element={<ImagesDesktop user={user} images={images} />}
           />
           <Route
-            path="/project/:project"
+            path="/type/:type"
             element={<ImagesDesktop user={user} images={images} />}
           />
           <Route path="/:id" element={<Image user={user} image={image} />} />
@@ -93,10 +93,11 @@ const Home = ({ user }) => {
   const matches = useMediaQuery(theme.breakpoints.down('tablet'));
 
   const posts = useSelector(({ posts }) => posts);
-  const projectMatch = useMatch('/project/:project');
-  const images = projectMatch
-    ? posts.filter((p) => p.project === projectMatch.params.project)
+  const typeMatch = useMatch('/type/:type');
+  const images = typeMatch
+    ? posts.filter((p) => p.type === typeMatch.params.type)
     : posts;
+  console.log('home', images);
   const match = useMatch('/:id');
   const image = match ? posts.find((i) => i.id === match.params.id) : null;
 

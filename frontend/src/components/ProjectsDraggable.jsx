@@ -16,44 +16,13 @@ const ProjectsDraggable = ({ posts, projects }) => {
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
-    // var arr = [1, 2, 3, 4, 5, 6, 7, 8];
-    // var end = arr.splice(3, 5);
-    // arr.splice(0, 0, ...end);
-
     const items = Array.from(posts);
-    // const [reorderedItem] = items.splice(result.source.index, 1);
-    // items.splice(result.destination.index, 0, reorderedItem);
-
     const startIndex = projects[result.source.index].start;
     const numOfValues = projects[result.source.index].values.length;
     const endIndex = projects[result.destination.index].start;
     const reorderedProjects = items.splice(startIndex, numOfValues);
-    console.log(reorderedProjects);
     items.splice(endIndex, 0, ...reorderedProjects);
-    items.forEach((p, i) => {
-      console.log(i);
-      console.log(p.project);
-    });
-    console.log(items.length);
-    // if (posts !== images) {
-    //   items.reverse();
-    //   const indexArr = images
-    //     .map((i) => posts.findIndex((p) => p.id === i.id))
-    //     .reverse();
-    //   let updatedPosts = [];
-    //   for (let i = 0; i < posts.length; i++) {
-    //     if (i === indexArr.at(-1)) {
-    //       updatedPosts.push(items.at(-1));
-    //       items.pop();
-    //       indexArr.pop();
-    //     } else {
-    //       updatedPosts.push(posts[i]);
-    //     }
-    //   }
-    //   dispatch(updatePostOrder(updatedPosts));
-    // } else {
     dispatch(updatePostOrder(items));
-    // }
   }
 
   return (
@@ -86,12 +55,11 @@ const ProjectsDraggable = ({ posts, projects }) => {
                               src={values[0].image}
                               alt={`${values[0].image} Thumb`}
                             />
-                            <div>{index}</div>
                           </div>
                           <p>{values[0].project}</p>
-                          <button onClick={() => console.log('hello')}>
-                            Click Me
-                          </button>
+                          <Link to={`/edit/projects/${index}`}>
+                            <button>Edit {index}</button>
+                          </Link>
                         </li>
                       )}
                     </Draggable>

@@ -5,6 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import ImagesDraggable from '../components/ImagesDraggable';
 import ProjectsDraggable from '../components/ProjectsDraggable';
+import ProjectDraggable from '../components/ProjectDraggable';
 import DrawerMenu from '../components/DrawerMenu';
 import LogoutButton from '../components/LogoutButton';
 import { groupByProj } from '../utils';
@@ -98,7 +99,7 @@ const HomeMobileContainer = styled('div')(() => ({
   gap: '1.25rem',
 }));
 
-const HomeDesktop = ({ images, posts, user, projects }) => {
+const HomeDesktop = ({ images, posts, user, projects, project }) => {
   return (
     <HomeDesktopContainer>
       {/* Menu component */}
@@ -115,6 +116,10 @@ const HomeDesktop = ({ images, posts, user, projects }) => {
         <Route
           path="/projects"
           element={<ProjectsDraggable posts={posts} projects={projects} />}
+        />
+        <Route
+          path="/projects/:index"
+          element={<ProjectDraggable posts={posts} project={project} />}
         />
       </Routes>
     </HomeDesktopContainer>
@@ -145,13 +150,16 @@ const Edit = ({ user }) => {
   const matches = useMediaQuery(theme.breakpoints.down('tablet'));
 
   const posts = useSelector(({ posts }) => posts);
-  console.log(posts);
-  const match = useMatch('/edit/type/:type');
-  const images = match
-    ? posts.filter((p) => p.type === match.params.type)
+  // console.log(posts);
+  const typeMatch = useMatch('/edit/type/:type');
+  const images = typeMatch
+    ? posts.filter((p) => p.type === typeMatch.params.type)
     : posts;
   // project testing
   const projects = groupByProj(posts);
+  const projectMatch = useMatch('/edit/projects/:id');
+  // console.log('projectMatch', projectMatch);
+  const project = projectMatch && projects[projectMatch.params.id];
 
   return (
     <div>
@@ -161,6 +169,7 @@ const Edit = ({ user }) => {
           posts={posts}
           images={images}
           projects={projects}
+          project={project}
         />
       )}
       {matches && <HomeMobile user={user} posts={posts} images={images} />}
