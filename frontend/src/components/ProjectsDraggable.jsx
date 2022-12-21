@@ -2,7 +2,9 @@ import { useDispatch } from 'react-redux';
 import '../index.css';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Link } from 'react-router-dom';
-import { Container } from '@mui/material';
+import { Container, Button } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { updatePostOrder } from '../reducers/postReducer';
 
 import { styled } from '@mui/material/styles';
@@ -50,6 +52,7 @@ const ProjectsDraggable = ({ posts, projects }) => {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
+                          <DragIndicatorIcon />
                           <div className="characters-thumb">
                             <img
                               src={values[0].image}
@@ -58,7 +61,9 @@ const ProjectsDraggable = ({ posts, projects }) => {
                           </div>
                           <p>{values[0].project}</p>
                           <Link to={`/edit/projects/${index}`}>
-                            <button>Edit {index}</button>
+                            <Button variant="contained" endIcon={<EditIcon />}>
+                              Edit
+                            </Button>
                           </Link>
                         </li>
                       )}

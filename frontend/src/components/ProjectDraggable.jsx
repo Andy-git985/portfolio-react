@@ -3,8 +3,9 @@ import '../index.css';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Container } from '@mui/material';
 import { updatePostOrder } from '../reducers/postReducer';
-
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { styled } from '@mui/material/styles';
+
 const OutlineContainer = styled(Container)(() => ({
   width: 'calc(100vw - 30%)',
   outline: '1px solid blue',
@@ -44,6 +45,7 @@ const ProjectDraggable = ({ posts, project }) => {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
+                          <DragIndicatorIcon />
                           <div className="characters-thumb">
                             <img src={image} alt={`${image} Thumb`} />
                           </div>
