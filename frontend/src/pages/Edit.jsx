@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useMatch, Link, NavLink, Routes, Route } from 'react-router-dom';
-import { useMediaQuery } from '@mui/material';
+import { useMediaQuery, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import ImagesDraggable from '../components/ImagesDraggable';
@@ -11,18 +11,21 @@ import LogoutButton from '../components/LogoutButton';
 import { groupByProj } from '../utils';
 
 const MenuDesktopContainer = styled('div')(() => ({
-  width: 'calc(100vw - 70%)',
-  height: '100vh',
-  outline: '1px solid blue',
-  flexShrink: '0',
+  // width: 'calc(100vw - 70%)',
+  // height: '100vh',
+  // outline: '1px solid blue',
+  // flexShrink: '0',
+  position: 'sticky',
+  top: '1rem',
+  backgroundColor: 'yellow',
 }));
 
 const MenuFixedContent = styled('div')(() => ({
-  position: 'fixed',
-  width: 'calc(100vw - 85%)',
-  padding: '15px',
-  top: '0',
-  left: '0',
+  // position: 'fixed',
+  // width: 'calc(100vw - 85%)',
+  // padding: '15px',
+  // top: '0',
+  // left: '0',
 }));
 
 const activeStyle = {
@@ -88,47 +91,76 @@ export const MenuMobile = ({ user }) => {
   );
 };
 
-const HomeDesktopContainer = styled('div')(() => ({
+const EditDesktopContainer = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
 }));
 
-const HomeMobileContainer = styled('div')(() => ({
+const EditMobileContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '1.25rem',
 }));
 
-const HomeDesktop = ({ images, posts, user, projects, project }) => {
+const padding = {
+  padding: '.5em',
+};
+
+const EditDesktop = ({ images, posts, user, projects, project }) => {
   return (
-    <HomeDesktopContainer>
-      {/* Menu component */}
-      <MenuDesktop user={user} />
-      <Routes>
-        <Route
-          path="/"
-          element={<ImagesDraggable posts={posts} images={images} />}
-        />
-        <Route
-          path="/type/:type"
-          element={<ImagesDraggable posts={posts} images={images} />}
-        />
-        <Route
-          path="/projects"
-          element={<ProjectsDraggable posts={posts} projects={projects} />}
-        />
-        <Route
-          path="/projects/:index"
-          element={<ProjectDraggable posts={posts} project={project} />}
-        />
-      </Routes>
-    </HomeDesktopContainer>
+    <Grid container columns={10}>
+      <Grid item mobile={10} tablet={3}>
+        <MenuDesktop user={user} />
+      </Grid>
+      <Grid item mobile={10} tablet={7} style={padding}>
+        <Routes>
+          <Route
+            path="/"
+            element={<ImagesDraggable posts={posts} images={images} />}
+          />
+          <Route
+            path="/type/:type"
+            element={<ImagesDraggable posts={posts} images={images} />}
+          />
+          <Route
+            path="/projects"
+            element={<ProjectsDraggable posts={posts} projects={projects} />}
+          />
+          <Route
+            path="/projects/:index"
+            element={<ProjectDraggable posts={posts} project={project} />}
+          />
+        </Routes>
+      </Grid>
+    </Grid>
+    //     <EditDesktopContainer>
+    //   {/* Menu component */}
+    //   <MenuDesktop user={user} />
+    //   <Routes>
+    //     <Route
+    //       path="/"
+    //       element={<ImagesDraggable posts={posts} images={images} />}
+    //     />
+    //     <Route
+    //       path="/type/:type"
+    //       element={<ImagesDraggable posts={posts} images={images} />}
+    //     />
+    //     <Route
+    //       path="/projects"
+    //       element={<ProjectsDraggable posts={posts} projects={projects} />}
+    //     />
+    //     <Route
+    //       path="/projects/:index"
+    //       element={<ProjectDraggable posts={posts} project={project} />}
+    //     />
+    //   </Routes>
+    // </EditDesktopContainer>
   );
 };
 
-const HomeMobile = ({ images, posts, user }) => {
+const EditMobile = ({ images, posts, user }) => {
   return (
-    <HomeMobileContainer>
+    <EditMobileContainer>
       {/* Menu component */}
       <MenuMobile user={user} />
       <Routes>
@@ -141,7 +173,7 @@ const HomeMobile = ({ images, posts, user }) => {
           element={<ImagesDraggable posts={posts} images={images} />}
         />
       </Routes>
-    </HomeMobileContainer>
+    </EditMobileContainer>
   );
 };
 
@@ -164,7 +196,7 @@ const Edit = ({ user }) => {
   return (
     <div>
       {!matches && (
-        <HomeDesktop
+        <EditDesktop
           user={user}
           posts={posts}
           images={images}
@@ -172,7 +204,7 @@ const Edit = ({ user }) => {
           project={project}
         />
       )}
-      {matches && <HomeMobile user={user} posts={posts} images={images} />}
+      {matches && <EditMobile user={user} posts={posts} images={images} />}
     </div>
   );
 };

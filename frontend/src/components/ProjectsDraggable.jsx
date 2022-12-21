@@ -6,10 +6,10 @@ import { Container, Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { updatePostOrder } from '../reducers/postReducer';
-
 import { styled } from '@mui/material/styles';
+
 const OutlineContainer = styled(Container)(() => ({
-  width: 'calc(100vw - 30%)',
+  // width: 'calc(100vw - 30%)',
   outline: '1px solid blue',
 }));
 
