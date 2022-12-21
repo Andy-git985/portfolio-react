@@ -26,7 +26,7 @@ const ProjectDraggable = ({ posts, project }) => {
   return (
     <OutlineContainer>
       <header>
-        <h1>Final Space Characters</h1>
+        <h1>{project.project}</h1>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="images">
             {(provided) => (
@@ -59,12 +59,6 @@ const ProjectDraggable = ({ posts, project }) => {
           </Droppable>
         </DragDropContext>
       </header>
-      <p>
-        Images from{' '}
-        <a href="https://final-space.fandom.com/wiki/Final_Space_Wiki">
-          Final Space Wiki
-        </a>
-      </p>
     </OutlineContainer>
   );
 };

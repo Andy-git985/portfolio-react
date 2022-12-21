@@ -12,7 +12,7 @@ const ImageContainer = styled(Container)(() => ({
   minHeight: '100vh',
 }));
 const ImageDiv = styled('div')(() => ({
-  maxWidth: '500px',
+  maxWidth: '750px',
   position: 'relative',
 }));
 const CustomIconButton = styled(IconButton)(() => ({
