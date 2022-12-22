@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import '../index.css';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Container } from '@mui/material';
@@ -13,6 +15,13 @@ const OutlineContainer = styled(Container)(() => ({
 
 const ProjectDraggable = ({ posts, project }) => {
   const dispatch = useDispatch();
+
+  const location = useLocation();
+  useEffect(() => {
+    console.log(location);
+    console.log(location.state.edit);
+  }, [location]);
+
   function handleOnDragEnd(result) {
     if (!result.destination) return;
     const items = Array.from(posts);

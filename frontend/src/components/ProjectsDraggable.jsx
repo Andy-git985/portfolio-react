@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import '../index.css';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Link } from 'react-router-dom';
@@ -15,6 +17,12 @@ const OutlineContainer = styled(Container)(() => ({
 
 const ProjectsDraggable = ({ posts, projects }) => {
   const dispatch = useDispatch();
+
+  const location = useLocation();
+  useEffect(() => {
+    console.log(location);
+    console.log(location.state.edit);
+  }, [location]);
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
@@ -60,7 +68,10 @@ const ProjectsDraggable = ({ posts, projects }) => {
                             />
                           </div>
                           <p>{values[0].project}</p>
-                          <Link to={`/edit/projects/${index}`}>
+                          <Link
+                            to={`/edit/projects/${index}`}
+                            state={{ edit: 'single project' }}
+                          >
                             <Button variant="contained" endIcon={<EditIcon />}>
                               Edit
                             </Button>

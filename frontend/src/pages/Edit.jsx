@@ -41,24 +41,28 @@ export const MenuDesktop = ({ user }) => {
         </Link>
         <NavLink
           to="/edit/"
+          state={{ edit: 'all' }}
           style={({ isActive }) => (isActive ? activeStyle : undefined)}
         >
           <div>All</div>
         </NavLink>
         <NavLink
           to="/edit/type/editorial"
+          state={{ edit: 'editorial' }}
           style={({ isActive }) => (isActive ? activeStyle : undefined)}
         >
           <div>Editorial</div>
         </NavLink>
         <NavLink
           to="/edit/type/advertising"
+          state={{ edit: 'advertising' }}
           style={({ isActive }) => (isActive ? activeStyle : undefined)}
         >
           <div>Advertising</div>
         </NavLink>
         <NavLink
           to="/edit/projects"
+          state={{ edit: 'all projects' }}
           style={({ isActive }) => (isActive ? activeStyle : undefined)}
         >
           <div>Projects</div>
@@ -128,7 +132,7 @@ const EditDesktop = ({ images, posts, user, projects, project }) => {
           />
           <Route
             path="/projects/:index"
-            element={<ProjectDraggable posts={posts} project={project} />}
+            element={<ImagesDraggable posts={posts} images={project} />}
           />
         </Routes>
       </Grid>
