@@ -9,6 +9,9 @@ const postSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  type: {
+    type: String,
+  },
   project: {
     type: String,
     require: true,

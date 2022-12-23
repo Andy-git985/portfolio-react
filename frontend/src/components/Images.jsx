@@ -1,53 +1,112 @@
 import { Link } from 'react-router-dom';
-import { ImageList, ImageListItem } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Masonry from '@mui/lab/Masonry';
+import { Container, ImageList, ImageListItem } from '@mui/material';
 
-const Image = ({ image }) => {
+const CustomImageList = styled(ImageList)(() => ({
+  // width: 'calc(100vw - 30%)',
+  width: '70%',
+  flexShrink: '0',
+  marginInline: 'auto',
+}));
+
+// const CustomImageListItem = styled('div')(() => ({
+//   padding: '10px',
+// }));
+const CustomImageListItem = styled(ImageListItem)(() => ({
+  padding: '10px',
+}));
+// const ImagesDesktopContainer = styled('div')(() => ({
+//   width: '65%',
+//   flexShrink: '0',
+//   marginInline: 'auto',
+//   padding: '1.5em',
+// }));
+
+const CustomContainer = styled(Container)(() => ({
+  paddingTop: '10px',
+}));
+export const ImagesDesktop = ({ images, user }) => {
+  return (
+    // <CustomContainer>
+    <Masonry
+      variant="masonry"
+      columns={{ mobile: 1, tablet: 1, laptop: 2, desktop: 3 }}
+      spacing={1}
+    >
+      {images.map((image) => {
+        return (
+          <div key={image.id}>
+            {user.loggedIn ? (
+              <Link to={`/${image.id}`}>
+                <img src={image.image} alt={image.title}></img>
+              </Link>
+            ) : (
+              <img src={image.image} alt={image.title}></img>
+            )}
+          </div>
+        );
+      })}
+    </Masonry>
+    // </CustomContainer>
+
+    // <CustomImageList variant="masonry" cols={3} gap={8}>
+    //   {images.map((image) => {
+    //     return (
+    //       <CustomImageListItem key={image.id}>
+    //         <Link to={`/${image.id}`}>
+    //           <img src={image.image} alt={image.title}></img>
+    //         </Link>
+    //       </CustomImageListItem>
+    //     );
+    //   })}
+    // </CustomImageList>
+  );
+};
+
+export const ImagesTablet = ({ images, user }) => {
+  return (
+    <CustomContainer>
+      <Masonry variant="masonry" columns={2} spacing={1}>
+        {images.map((image) => {
+          return (
+            <div key={image.id}>
+              <Link to={`/${image.id}`}>
+                <img src={image.image} alt={image.title}></img>
+              </Link>
+            </div>
+          );
+        })}
+      </Masonry>
+    </CustomContainer>
+    // <CustomImageList variant="masonry" cols={2} gap={8}>
+    //   {images.map((image) => {
+    //     return (
+    //       <CustomImageListItem key={image.id}>
+    //         <img src={image.image} alt={image.title}></img>
+    //       </CustomImageListItem>
+    //     );
+    //   })}
+    // </CustomImageList>
+  );
+};
+
+export const ImagesMobile = ({ images, user }) => {
   return (
     <div>
-      <Link to={`/${image.id}`}>
-        {' '}
-        <img src={image.image} alt={image.title} loading="lazy" />
-      </Link>
+      {images.map((image) => {
+        return (
+          <div key={image.id}>
+            {user.loggedIn ? (
+              <Link to={`/${image.id}`}>
+                <img src={image.image} alt={image.title}></img>
+              </Link>
+            ) : (
+              <img src={image.image} alt={image.title}></img>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
-
-const Images = ({ images, removeImage }) => {
-  const handleClick = (id) => {
-    removeImage(id);
-  };
-
-  return (
-    <>
-      {images.length > 1 ? (
-        <ImageList className="images masonry" variant="masonry" gap={8}>
-          {images.map((image) => (
-            <ImageListItem key={image.id}>
-              <Image image={image} />
-            </ImageListItem>
-          ))}
-        </ImageList>
-      ) : (
-        <div className="images">
-          {images.map((image) => (
-            <div key={image.id}>
-              <Image image={image} />
-              <button onClick={() => handleClick(image.id)}>Delete</button>
-            </div>
-          ))}
-        </div>
-      )}
-    </>
-
-    // original html
-    // <div className="images">
-    //   {images
-    //     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    //     .map((image) => (
-    //       <Image key={image.id} image={image} />
-    //     ))}
-    // </div>
-  );
-};
-
-export default Images;

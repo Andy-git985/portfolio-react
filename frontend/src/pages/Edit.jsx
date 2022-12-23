@@ -1,52 +1,183 @@
-import { Routes, Route, useMatch, useNavigate, Link } from 'react-router-dom';
-import { useResource } from '../hooks';
+import { useSelector } from 'react-redux';
+import { useMatch, Link, NavLink, Routes, Route } from 'react-router-dom';
+import { useMediaQuery, Grid } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
+import ImagesDraggable from '../components/ImagesDraggable';
+import ProjectsDraggable from '../components/ProjectsDraggable';
+import ProjectDraggable from '../components/ProjectDraggable';
+import DrawerMenu from '../components/DrawerMenu';
+import LogoutButton from '../components/LogoutButton';
+import { groupByProj } from '../utils';
 
-import Menu from '../components/Menu';
-// import Images from '../components/Images';
-// import UploadForm from '../components/UploadForm';
-import DragImages from '../components/DragImages';
-import { useState } from 'react';
+const MenuDesktopContainer = styled('div')(() => ({
+  // width: 'calc(100vw - 70%)',
+  // height: '100vh',
+  // outline: '1px solid blue',
+  // flexShrink: '0',
+  position: 'sticky',
+  top: '1rem',
+  backgroundColor: 'yellow',
+}));
 
-const Edit = ({ user }) => {
-  const [posts, postService] = useResource('/api/posts');
-  const [order, setOrder] = useState(posts);
-  // const navigate = useNavigate();
+const MenuFixedContent = styled('div')(() => ({
+  // position: 'fixed',
+  // width: 'calc(100vw - 85%)',
+  // padding: '15px',
+  // top: '0',
+  // left: '0',
+}));
 
-  const editLink = 'edit';
-  const projectMatch = useMatch('/edit/:project');
-  // const postMatch = useMatch('/:id');
+const activeStyle = {
+  color: 'Red',
+};
 
-  const images = projectMatch
-    ? posts.filter((p) => p.project === projectMatch.params.project)
-    : posts;
-
-  // const image = postMatch
-  //   ? posts.filter((p) => p.id === postMatch.params.id)
-  //   : posts;
-
-  const handleOnDragEnd = (result) => {
-    if (!result.destination) return;
-    const items = Array.from(order);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    setOrder(items);
-  };
-
+export const MenuDesktop = ({ user }) => {
   return (
-    <div className="flex">
-      <div className="menu">
-        <Menu link={editLink} user={user} />
-      </div>
+    <MenuDesktopContainer>
+      <MenuFixedContent>
+        <Link to="/">
+          <div>Name</div>
+        </Link>
+        <NavLink
+          to="/edit"
+          state={{ edit: 'all' }}
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
+          <div>All</div>
+        </NavLink>
+        <NavLink
+          to="/edit/type/editorial"
+          state={{ edit: 'editorial' }}
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
+          <div>Editorial</div>
+        </NavLink>
+        <NavLink
+          to="/edit/type/advertising"
+          state={{ edit: 'advertising' }}
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
+          <div>Advertising</div>
+        </NavLink>
+        <NavLink
+          to="/edit/projects"
+          state={{ edit: 'all projects' }}
+          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        >
+          <div>Projects</div>
+        </NavLink>
+        <div>Contact</div>
+        {user.loggedIn && <LogoutButton />}
+      </MenuFixedContent>
+    </MenuDesktopContainer>
+  );
+};
+
+const MenuMobileContainer = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '.625rem',
+}));
+
+export const MenuMobile = ({ user }) => {
+  return (
+    <div>
+      {/* extra div for now */}
+      <MenuMobileContainer>
+        <Link to="/edit/">
+          <div>Name</div>
+        </Link>
+        <DrawerMenu />
+      </MenuMobileContainer>
+      {user.loggedIn && <LogoutButton />}
+    </div>
+  );
+};
+
+const EditMobileContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.25rem',
+}));
+
+const padding = {
+  padding: '.5em',
+};
+
+const EditDesktop = ({ images, posts, user, projects, project }) => {
+  return (
+    <Grid container columns={10}>
+      <Grid item mobile={10} tablet={3}>
+        <MenuDesktop user={user} />
+      </Grid>
+      <Grid item mobile={10} tablet={7} style={padding}>
+        <Routes>
+          <Route
+            path="/"
+            element={<ImagesDraggable posts={posts} images={posts} />}
+          />
+          <Route
+            path="/type/:type"
+            element={<ImagesDraggable posts={posts} images={images} />}
+          />
+          <Route
+            path="/projects"
+            element={<ProjectsDraggable posts={posts} projects={projects} />}
+          />
+          <Route
+            path="/projects/:index"
+            element={<ImagesDraggable posts={posts} images={project} />}
+          />
+        </Routes>
+      </Grid>
+    </Grid>
+  );
+};
+
+const EditMobile = ({ images, posts, user }) => {
+  return (
+    <EditMobileContainer>
+      {/* Menu component */}
+      <MenuMobile user={user} />
       <Routes>
         <Route
           path="/"
-          element={
-            <DragImages images={images} handleOnDragEnd={handleOnDragEnd} />
-          }
+          element={<ImagesDraggable posts={posts} images={images} />}
         />
-        {/* <Route path="/:project" element={<Images images={images} />} /> */}
+        <Route
+          path="/type/:type"
+          element={<ImagesDraggable posts={posts} images={images} />}
+        />
       </Routes>
+    </EditMobileContainer>
+  );
+};
+
+const Edit = ({ user }) => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('tablet'));
+  const posts = useSelector(({ posts }) => posts);
+  const typeMatch = useMatch('/edit/type/:type');
+  const images = typeMatch
+    ? posts.filter((p) => p.type === typeMatch.params.type)
+    : posts;
+  const projects = groupByProj(posts);
+  const projectMatch = useMatch('/edit/projects/:id');
+  const project = projectMatch && projects[projectMatch.params.id];
+
+  return (
+    <div>
+      {!matches && (
+        <EditDesktop
+          user={user}
+          posts={posts}
+          images={images}
+          projects={projects}
+          project={project}
+        />
+      )}
+      {matches && <EditMobile user={user} posts={posts} images={images} />}
     </div>
   );
 };

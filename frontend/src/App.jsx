@@ -1,42 +1,34 @@
-import { useEffect, useState } from 'react';
+import { initializePosts } from './reducers/postReducer';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import Home from './pages/Home';
+import { theme } from './styles/styles';
+import { ThemeProvider } from '@mui/material';
 import Edit from './pages/Edit';
+import ProtectedRoute from './routing/ProtectedRoute';
+import postServices from './services/posts';
 
 const App = () => {
-  const [user, setUser] = useState(false);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    const getUser = () => {
-      fetch('http://localhost:3001/auth/login/success', {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Credentials': true,
-        },
-      })
-        .then((response) => {
-          if (response.status === 200) return response.json();
-          throw new Error('authentication has been failed!');
-        })
-        .then((resObject) => {
-          setUser(resObject.user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getUser();
-  }, []);
+    dispatch(initializePosts());
+  }, [dispatch]);
 
+  const user = useSelector(({ user }) => user);
+  if (user.loggedIn) {
+    postServices.setToken(user.userToken);
+  }
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/*" element={<Home user={user} />} />
-        <Route path="/edit/*" element={<Edit />} />
-      </Routes>
+      <ThemeProvider theme={theme}>
+        <Routes>
+          <Route path="/*" element={<Home user={user} />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/edit/*" element={<Edit user={user} />} />
+          </Route>
+        </Routes>
+      </ThemeProvider>
     </BrowserRouter>
   );
 };

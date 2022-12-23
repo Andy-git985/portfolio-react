@@ -1,55 +1,81 @@
-import { Routes, Route, useMatch, useNavigate, Link } from 'react-router-dom';
-import { useResource } from '../hooks';
+import { useSelector } from 'react-redux';
+import { useMatch, Routes, Route, Link } from 'react-router-dom';
+import { useMediaQuery, Grid } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
+import { ImagesDesktop, ImagesMobile } from '../components/Images';
+import { MenuDesktop, MenuMobile } from '../components/Menu';
+import Image from '../components/Image';
 
-import Menu from '../components/Menu';
-import Images from '../components/Images';
-import UploadForm from '../components/UploadForm';
+const padding = {
+  padding: '.5em',
+};
+
+const HomeDesktop = ({ images, image, user }) => {
+  return (
+    <Grid container columns={10}>
+      <Grid item mobile={10} tablet={3}>
+        <MenuDesktop user={user} />
+      </Grid>
+      <Grid item mobile={10} tablet={7} style={padding}>
+        <Routes>
+          <Route
+            path="/"
+            element={<ImagesDesktop user={user} images={images} />}
+          />
+          <Route
+            path="/type/:type"
+            element={<ImagesDesktop user={user} images={images} />}
+          />
+          <Route path="/:id" element={<Image user={user} image={image} />} />
+        </Routes>
+      </Grid>
+    </Grid>
+  );
+};
+const HomeMobileContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.25rem',
+}));
+
+const HomeMobile = ({ images, image, user }) => {
+  return (
+    <HomeMobileContainer>
+      {/* Menu component */}
+      <MenuMobile user={user} />
+      <Routes>
+        <Route
+          path="/"
+          element={<ImagesMobile user={user} images={images} />}
+        />
+        <Route
+          path="/project/:project"
+          element={<ImagesMobile user={user} images={images} />}
+        />
+        <Route path="/:id" element={<Image user={user} image={image} />} />
+      </Routes>
+    </HomeMobileContainer>
+  );
+};
 
 const Home = ({ user }) => {
-  const [posts, postService] = useResource('/api/posts');
-  const navigate = useNavigate();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('tablet'));
 
-  const length = posts.length;
-
-  const addPost = (postObject) => {
-    postService.create(postObject);
-  };
-
-  const removePost = (id) => {
-    postService.remove(id);
-    navigate('/');
-  };
-
-  const projectsLink = 'projects';
-  const projectMatch = useMatch('/projects/:project');
-  const postMatch = useMatch('/:id');
-
-  const images = projectMatch
-    ? posts.filter((p) => p.project === projectMatch.params.project)
+  const posts = useSelector(({ posts }) => posts);
+  const typeMatch = useMatch('/type/:type');
+  const images = typeMatch
+    ? posts.filter((p) => p.type === typeMatch.params.type)
     : posts;
-
-  const image = postMatch
-    ? posts.filter((p) => p.id === postMatch.params.id)
-    : posts;
+  const match = useMatch('/:id');
+  const image = match ? posts.find((i) => i.id === match.params.id) : null;
 
   return (
-    <div className="flex">
-      <div className="menu">
-        <Menu link={projectsLink} user={user} />
-        {user && <UploadForm length={length} createPost={addPost} />}
-        <Link to="/edit">
-          <div>Edit</div>
-        </Link>
-      </div>
-      <Routes>
-        <Route path="/" element={<Images images={images} />} />
-        <Route
-          path="/:id"
-          element={<Images images={image} removeImage={removePost} />}
-        />
-        <Route path="/projects/:project" element={<Images images={images} />} />
-      </Routes>
-    </div>
+    <>
+      {!matches && <HomeDesktop user={user} images={images} image={image} />}
+      {matches && <HomeMobile user={user} images={images} image={image} />}
+    </>
   );
 };
 
