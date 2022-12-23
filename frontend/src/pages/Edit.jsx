@@ -40,7 +40,7 @@ export const MenuDesktop = ({ user }) => {
           <div>Name</div>
         </Link>
         <NavLink
-          to="/edit/"
+          to="/edit"
           state={{ edit: 'all' }}
           style={({ isActive }) => (isActive ? activeStyle : undefined)}
         >
@@ -95,11 +95,6 @@ export const MenuMobile = ({ user }) => {
   );
 };
 
-const EditDesktopContainer = styled('div')(() => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-}));
-
 const EditMobileContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
@@ -120,7 +115,7 @@ const EditDesktop = ({ images, posts, user, projects, project }) => {
         <Routes>
           <Route
             path="/"
-            element={<ImagesDraggable posts={posts} images={images} />}
+            element={<ImagesDraggable posts={posts} images={posts} />}
           />
           <Route
             path="/type/:type"
@@ -137,28 +132,6 @@ const EditDesktop = ({ images, posts, user, projects, project }) => {
         </Routes>
       </Grid>
     </Grid>
-    //     <EditDesktopContainer>
-    //   {/* Menu component */}
-    //   <MenuDesktop user={user} />
-    //   <Routes>
-    //     <Route
-    //       path="/"
-    //       element={<ImagesDraggable posts={posts} images={images} />}
-    //     />
-    //     <Route
-    //       path="/type/:type"
-    //       element={<ImagesDraggable posts={posts} images={images} />}
-    //     />
-    //     <Route
-    //       path="/projects"
-    //       element={<ProjectsDraggable posts={posts} projects={projects} />}
-    //     />
-    //     <Route
-    //       path="/projects/:index"
-    //       element={<ProjectDraggable posts={posts} project={project} />}
-    //     />
-    //   </Routes>
-    // </EditDesktopContainer>
   );
 };
 
@@ -184,17 +157,16 @@ const EditMobile = ({ images, posts, user }) => {
 const Edit = ({ user }) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('tablet'));
-
   const posts = useSelector(({ posts }) => posts);
-  // console.log(posts);
+  console.log('posts', posts);
   const typeMatch = useMatch('/edit/type/:type');
   const images = typeMatch
     ? posts.filter((p) => p.type === typeMatch.params.type)
     : posts;
-  // project testing
+  console.log('images', images);
+  console.log(images.start);
   const projects = groupByProj(posts);
   const projectMatch = useMatch('/edit/projects/:id');
-  // console.log('projectMatch', projectMatch);
   const project = projectMatch && projects[projectMatch.params.id];
 
   return (

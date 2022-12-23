@@ -7,35 +7,6 @@ import { ImagesDesktop, ImagesMobile } from '../components/Images';
 import { MenuDesktop, MenuMobile } from '../components/Menu';
 import Image from '../components/Image';
 
-// const style = {
-//   position: 'sticky',
-//   top: '1rem',
-// };
-// const HomeDesktopContainer = styled('div')(() => ({
-//   display: 'flex',
-//   justifyContent: 'space-between',
-// }));
-
-// const HomeDesktop = ({ images, image, user }) => {
-//   return (
-//     <HomeDesktopContainer>
-//       {/* Menu component */}
-//       <MenuDesktop user={user} />
-//       <Routes>
-//         <Route
-//           path="/"
-//           element={<ImagesDesktop user={user} images={images} />}
-//         />
-//         <Route
-//           path="/project/:project"
-//           element={<ImagesDesktop user={user} images={images} />}
-//         />
-//         <Route path="/:id" element={<Image user={user} image={image} />} />
-//       </Routes>
-//     </HomeDesktopContainer>
-//   );
-// };
-
 const padding = {
   padding: '.5em',
 };
@@ -97,7 +68,6 @@ const Home = ({ user }) => {
   const images = typeMatch
     ? posts.filter((p) => p.type === typeMatch.params.type)
     : posts;
-  console.log('home', images);
   const match = useMatch('/:id');
   const image = match ? posts.find((i) => i.id === match.params.id) : null;
 

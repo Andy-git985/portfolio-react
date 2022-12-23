@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const config = require('../utils/config');
 
 authRouter.get('/login/success', (request, response) => {
-  console.log('request user?', request.user);
   if (request.user) {
     response.status(200).json({
       success: true,

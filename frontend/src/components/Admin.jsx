@@ -7,7 +7,7 @@ const Admin = () => {
     <>
       <LogoutButton />
       <UploadForm />
-      <Link to="/edit">
+      <Link to="/edit" state={{ edit: 'all' }}>
         <div>Edit</div>
       </Link>
     </>
