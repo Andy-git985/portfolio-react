@@ -24,6 +24,8 @@ const ProjectsDraggable = ({ posts, projects }) => {
     console.log(location.state.edit);
   }, [location]);
 
+  console.log(projects);
+
   function handleOnDragEnd(result) {
     if (!result.destination) return;
     const items = Array.from(posts);
@@ -38,7 +40,7 @@ const ProjectsDraggable = ({ posts, projects }) => {
   return (
     <OutlineContainer>
       <header>
-        <h1>Final Space Characters</h1>
+        <h1>Edit All Projects Order</h1>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="images">
             {(provided) => (
@@ -47,13 +49,9 @@ const ProjectsDraggable = ({ posts, projects }) => {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {projects.map(({ start, project, values }, index) => {
+                {projects.map(({ id, title, values }, index) => {
                   return (
-                    <Draggable
-                      key={`${project}-${start}`}
-                      draggableId={`${project}-${start}`}
-                      index={index}
-                    >
+                    <Draggable key={id} draggableId={id} index={index}>
                       {(provided) => (
                         <li
                           ref={provided.innerRef}
@@ -67,7 +65,7 @@ const ProjectsDraggable = ({ posts, projects }) => {
                               alt={`${values[0].image} Thumb`}
                             />
                           </div>
-                          <p>{values[0].project}</p>
+                          <p>{values[0].title}</p>
                           <Link
                             to={`/edit/projects/${index}`}
                             state={{ edit: 'single project' }}

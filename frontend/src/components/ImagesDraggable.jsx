@@ -17,6 +17,7 @@ const ImagesDraggable = ({ posts, images }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const edit = location.state?.edit;
+  console.log(images);
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
@@ -52,7 +53,12 @@ const ImagesDraggable = ({ posts, images }) => {
   return (
     <OutlineContainer>
       <header>
-        <h1>Final Space Characters</h1>
+        <h1>
+          {edit === 'all' && 'Edit All Posts Order'}
+          {edit === 'single project' && images.values[0].project}
+          {edit === 'editorial' && 'Editorial'}
+          {edit === 'advertising' && 'Advertising'}
+        </h1>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="images">
             {(provided) => (

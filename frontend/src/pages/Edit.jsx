@@ -158,13 +158,10 @@ const Edit = ({ user }) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('tablet'));
   const posts = useSelector(({ posts }) => posts);
-  console.log('posts', posts);
   const typeMatch = useMatch('/edit/type/:type');
   const images = typeMatch
     ? posts.filter((p) => p.type === typeMatch.params.type)
     : posts;
-  console.log('images', images);
-  console.log(images.start);
   const projects = groupByProj(posts);
   const projectMatch = useMatch('/edit/projects/:id');
   const project = projectMatch && projects[projectMatch.params.id];
