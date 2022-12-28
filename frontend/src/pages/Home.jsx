@@ -50,7 +50,7 @@ const HomeMobile = ({ images, image, user }) => {
           element={<ImagesMobile user={user} images={images} />}
         />
         <Route
-          path="/project/:project"
+          path="/type/:type"
           element={<ImagesMobile user={user} images={images} />}
         />
         <Route path="/:id" element={<Image user={user} image={image} />} />

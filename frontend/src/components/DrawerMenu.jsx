@@ -6,9 +6,9 @@ import { useState } from 'react';
 const data = [
   {
     name: 'EDITORIAL',
-    route: '/project/editorial',
+    route: '/type/editorial',
   },
-  { name: 'ADVERTISING', route: '/project/advertising' },
+  { name: 'ADVERTISING', route: '/type/advertising' },
 ];
 
 const Menu = styled('div')(() => ({
