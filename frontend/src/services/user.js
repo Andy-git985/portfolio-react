@@ -31,4 +31,9 @@ const logout = async () => {
   return response.status;
 };
 
-export default { getUser, logout, getToken };
+const getLoginUrl = async () => {
+  const response = await axios.get('/auth/login');
+  return response.data.url;
+};
+
+export default { getUser, logout, getToken, getLoginUrl };

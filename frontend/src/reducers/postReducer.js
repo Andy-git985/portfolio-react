@@ -23,7 +23,7 @@ const postSlice = createSlice({
       return state.filter((post) => post.id !== id);
     },
     appendPost(state, action) {
-      state.push(...action.payload);
+      state.unshift(...action.payload);
     },
     setPosts(state, action) {
       return action.payload;
@@ -41,7 +41,7 @@ export const {
 export const initializePosts = () => {
   return async (dispatch) => {
     const posts = await postService.getAll();
-    dispatch(setPosts(posts));
+    dispatch(setPosts(posts.slice().reverse()));
   };
 };
 export const createPost = (content) => {
@@ -53,7 +53,6 @@ export const createPost = (content) => {
 export const updatePost = (id, content) => {
   return async (dispatch) => {
     const updatedPost = await postService.update(id, content);
-    console.log('from reducer awaited', updatedPost);
     dispatch(updateOnePost(updatedPost));
   };
 };

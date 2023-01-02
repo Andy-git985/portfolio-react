@@ -32,6 +32,10 @@ authRouter.get('/login/success', (request, response) => {
 //   // response.redirect(config.CLIENT_URL);
 // });
 
+authRouter.get('/login', (request, response) => {
+  response.status(200).json({ url: config.CALLBACK_URL });
+});
+
 authRouter.get(
   '/google',
   passport.authenticate('google', { scope: ['profile'] })
@@ -54,31 +58,7 @@ authRouter.get(
     );
     response.cookie('jwt', token);
     response.status(200).redirect(config.CLIENT_URL);
-    // response
-    //   .status(200)
-    //   .send({ token, id: user.id, displayName: user.displayName });
   }
 );
-// authRouter.get(
-//   '/google/callback',
-//   passport.authenticate('google', {
-//     failureRedirect: '/login/failed',
-//   }),
-//   (request, response) => {
-//     console.log('redirected', request.user);
-//     const token = jwt.sign(request.user, process.env.SECRET, {
-//       expiresIn: 60 * 60,
-//     });
-//     console.log(token);
-//     return response.status(200).send({ token }).redirect(config.CLIENT_URL);
-//   }
-// );
-// authRouter.get(
-//   '/google/callback',
-//   passport.authenticate('google', {
-//     successRedirect: config.CLIENT_URL,
-//     failureRedirect: '/login/failed',
-//   })
-// );
 
 module.exports = authRouter;

@@ -1,7 +1,14 @@
 require('dotenv').config();
 
-const CLIENT_URL = process.env.CLIENT_URL;
+const CLIENT_URL =
+  process.env.NODE_ENV === 'development'
+    ? process.env.DEV_URL
+    : process.env.PROD_URL;
 const PORT = process.env.PORT;
+const CALLBACK_URL =
+  process.env.NODE_ENV === 'development'
+    ? process.env.DEV_CALLBACK_URL
+    : provess.env.PROD_CALLBACK_URL;
 
 const MONGODB_URI =
   process.env.NODE_ENV === 'test'
@@ -14,6 +21,7 @@ const ADMIN_ID = process.env.ADMIN_ID;
 
 module.exports = {
   ADMIN_ID,
+  CALLBACK_URL,
   CLIENT_URL,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,

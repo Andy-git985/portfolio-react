@@ -1,5 +1,6 @@
 import Google from '../img/google.png';
 import { styled } from '@mui/material/styles';
+import userServices from '../services/user';
 
 const Icon = styled('img')(() => ({
   width: '20px',
@@ -18,7 +19,8 @@ const Button = styled('div')(() => ({
 
 const LoginButton = () => {
   const google = async () => {
-    window.open('http://localhost:3001/auth/google', '_self');
+    const url = await userServices.getLoginUrl();
+    window.open(url, '_self');
   };
 
   return (
