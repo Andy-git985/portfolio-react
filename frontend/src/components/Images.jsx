@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Masonry from '@mui/lab/Masonry';
-import { Container, ImageList, ImageListItem } from '@mui/material';
+import { Container } from '@mui/material';
 
 const CustomContainer = styled(Container)(() => ({
   marginTop: '1rem',
@@ -17,13 +17,16 @@ export const ImagesDesktop = ({ images, user }) => {
       {images.map((image) => {
         return (
           <div key={image.id}>
-            {user.loggedIn ? (
+            {/* {user.loggedIn ? (
               <Link to={`/${image.id}`}>
                 <img src={image.image} alt={image.title}></img>
               </Link>
             ) : (
               <img src={image.image} alt={image.title}></img>
-            )}
+            )} */}
+            <Link to={`/${image.id}`}>
+              <img src={image.image} alt={image.title}></img>
+            </Link>
           </div>
         );
       })}
@@ -37,13 +40,16 @@ export const ImagesMobile = ({ images, user }) => {
       {images.map((image) => {
         return (
           <CustomContainer key={image.id}>
-            {user.loggedIn ? (
+            {/* {user.loggedIn ? (
               <Link to={`/${image.id}`}>
                 <img src={image.image} alt={image.title}></img>
               </Link>
             ) : (
               <img src={image.image} alt={image.title}></img>
-            )}
+            )} */}
+            <Link to={`/${image.id}`}>
+              <img src={image.image} alt={image.title}></img>
+            </Link>
           </CustomContainer>
         );
       })}

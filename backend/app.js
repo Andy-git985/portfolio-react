@@ -22,6 +22,12 @@ mongoose
     logger.error('error connecting to MongoDB:', error.message);
   });
 
+if (process.env.NODE_ENV === 'production') {
+  console.log('We are running in production mode');
+} else {
+  console.log('We are running in development mode');
+}
+
 app.use(passport.initialize());
 app.use(
   cors({

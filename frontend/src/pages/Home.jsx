@@ -69,7 +69,9 @@ const Home = ({ user }) => {
     ? posts.filter((p) => p.type === typeMatch.params.type)
     : posts;
   const match = useMatch('/:id');
-  const image = match ? posts.find((i) => i.id === match.params.id) : null;
+  const index = match && posts.findIndex((i) => i.id === match.params.id);
+  const image = match ? posts.slice(index).concat(posts.slice(0, index)) : null;
+  // const image = match ? posts.find((i) => i.id === match.params.id) : null;
 
   return (
     <>

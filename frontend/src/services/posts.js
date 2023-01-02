@@ -25,13 +25,16 @@ const update = async (id, newObject) => {
     headers: { Authorization: token },
   };
   const response = await axios.put(`${baseUrl}/${id}`, newObject, config);
-  console.log(response);
   return response.data;
 };
 
 const updateOrder = async (order) => {
   const config = {
-    headers: { Authorization: token },
+    headers: {
+      Authorization: token,
+      'Cache-Control': 'public',
+      'max-age': '86400',
+    },
   };
 
   const response = await axios.put(baseUrl, order, config);
