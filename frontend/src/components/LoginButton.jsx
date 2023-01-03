@@ -20,6 +20,7 @@ const Button = styled('div')(() => ({
 const LoginButton = () => {
   const google = async () => {
     const url = await userServices.getLoginUrl();
+    console.log(url);
     window.open(url, '_self');
   };
 

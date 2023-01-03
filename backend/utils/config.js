@@ -8,7 +8,7 @@ const PORT = process.env.PORT;
 const CALLBACK_URL =
   process.env.NODE_ENV === 'development'
     ? process.env.DEV_CALLBACK_URL
-    : provess.env.PROD_CALLBACK_URL;
+    : process.env.PROD_CALLBACK_URL;
 
 const MONGODB_URI =
   process.env.NODE_ENV === 'test'

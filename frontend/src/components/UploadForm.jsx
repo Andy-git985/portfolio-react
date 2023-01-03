@@ -10,11 +10,15 @@ import {
   TextField,
   Select,
   Button,
+  useMediaQuery,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from '@mui/material/';
-// import CheckIcon from '@mui/icons-material/Check';
+import { useTheme } from '@mui/material/styles';
 import Preview from './Preview';
 import { createPost } from '../reducers/postReducer';
-import posts from '../services/posts';
 
 const fieldStyle = { width: '150px', margin: '5px' };
 
@@ -65,106 +69,133 @@ const UploadForm = () => {
     setImages(updatedObj);
   };
 
+  const [open, setOpen] = useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('tablet'));
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form">
-        <div>
-          <TextField
-            label="Title"
-            variant="outlined"
-            {...register('title')}
-            style={fieldStyle}
-          />
-        </div>
-        <div>
-          <Controller
-            name="type"
-            render={({ field }) => (
-              <>
-                <FormControl style={fieldStyle}>
-                  <InputLabel>Type</InputLabel>
-                  <Select {...field} label="type">
-                    <MenuItem value="editorial">Editorial</MenuItem>
-                    <MenuItem value="advertising">Advertising</MenuItem>
-                  </Select>
-                </FormControl>
-              </>
-            )}
-            control={control}
-            defaultValue=""
-          />
-        </div>
-        <div>
-          <Controller
-            control={control}
-            name="project"
-            render={({ field: { onChange, value } }) => (
-              <Autocomplete
-                freeSolo
-                options={projects}
-                onChange={(event, values) => onChange(values)}
-                value={value}
-                renderInput={(params) => (
-                  <TextField
-                    style={fieldStyle}
-                    {...params}
-                    label="Project"
-                    variant="outlined"
-                    onChange={onChange}
+    <div>
+      <Button variant="contained" onClick={handleClickOpen}>
+        Upload Form
+      </Button>
+
+      <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form">
+          <DialogTitle id="responsive-dialog-title">Upload Form</DialogTitle>
+          <DialogContent>
+            <div>
+              <TextField
+                label="Title"
+                variant="outlined"
+                {...register('title')}
+                style={fieldStyle}
+              />
+            </div>
+            <div>
+              <Controller
+                name="type"
+                render={({ field }) => (
+                  <>
+                    <FormControl style={fieldStyle}>
+                      <InputLabel>Type</InputLabel>
+                      <Select {...field} label="type">
+                        <MenuItem value="editorial">Editorial</MenuItem>
+                        <MenuItem value="advertising">Advertising</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </>
+                )}
+                control={control}
+                defaultValue=""
+              />
+            </div>
+            <div>
+              <Controller
+                control={control}
+                name="project"
+                render={({ field: { onChange, value } }) => (
+                  <Autocomplete
+                    freeSolo
+                    options={projects}
+                    onChange={(event, values) => onChange(values)}
+                    value={value}
+                    renderInput={(params) => (
+                      <TextField
+                        style={fieldStyle}
+                        {...params}
+                        label="Project"
+                        variant="outlined"
+                        onChange={onChange}
+                      />
+                    )}
                   />
                 )}
               />
-            )}
-          />
-        </div>
-        <div>
-          <Button variant="contained" component="label" style={fieldStyle}>
-            Upload File
-            <input
-              type="file"
-              hidden
-              multiple
-              {...register('file')}
-              onChange={(event) => {
-                setImages([]);
-                let arr = [];
-                for (const file of event.target.files) {
-                  const img = {
-                    preview: URL.createObjectURL(file),
-                    data: file,
-                  };
-                  arr.push(img);
-                }
-                setImages(arr);
-                register('file').onChange(event);
-              }}
-            />
-          </Button>
-        </div>
-        <div>
-          <Button
-            type="button"
-            onClick={() => {
-              reset();
-              setImages([]);
-            }}
-            variant="contained"
-            style={fieldStyle}
-          >
-            Reset
-          </Button>
-        </div>
-        <div>
-          <Button type="submit" variant="contained" style={fieldStyle}>
-            Submit
-          </Button>
-        </div>
-      </form>
-      {images.length > 0 && (
-        <Preview images={images} removePreview={removePreview} />
-      )}
-      {/* <CheckIcon /> */}
-    </>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <div>
+              <Button variant="contained" component="label">
+                Upload File
+                <input
+                  type="file"
+                  hidden
+                  multiple
+                  {...register('file')}
+                  onChange={(event) => {
+                    setImages([]);
+                    let arr = [];
+                    for (const file of event.target.files) {
+                      const img = {
+                        preview: URL.createObjectURL(file),
+                        data: file,
+                      };
+                      arr.push(img);
+                    }
+                    setImages(arr);
+                    register('file').onChange(event);
+                  }}
+                />
+              </Button>
+            </div>
+            <div>
+              <Button
+                type="button"
+                onClick={() => {
+                  reset();
+                  setImages([]);
+                }}
+                variant="contained"
+              >
+                Reset
+              </Button>
+            </div>
+            <div>
+              <Button type="submit" variant="contained">
+                Submit
+              </Button>
+            </div>
+          </DialogActions>
+        </form>
+        <DialogContent>
+          {images.length > 0 && (
+            <Preview images={images} removePreview={removePreview} />
+          )}
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 };
 
