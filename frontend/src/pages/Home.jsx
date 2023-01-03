@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useMatch, Routes, Route, Link } from 'react-router-dom';
-import { useMediaQuery, Grid } from '@mui/material';
+import { useMediaQuery, Container, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import { ImagesDesktop, ImagesMobile } from '../components/Images';

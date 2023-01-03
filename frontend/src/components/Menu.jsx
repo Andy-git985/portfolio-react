@@ -1,4 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
+import { Container } from '@mui/material/';
 import { styled } from '@mui/material/styles';
 import DrawerMenu from './DrawerMenu';
 import LoginButton from './LoginButton';
@@ -54,7 +55,7 @@ export const MenuDesktop = ({ user }) => {
   );
 };
 
-const MenuMobileContainer = styled('div')(() => ({
+const MenuMobileContainer = styled(Container)(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   padding: '.625rem',

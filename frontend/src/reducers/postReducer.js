@@ -41,7 +41,7 @@ export const {
 export const initializePosts = () => {
   return async (dispatch) => {
     const posts = await postService.getAll();
-    dispatch(setPosts(posts.slice().reverse()));
+    dispatch(setPosts(posts));
   };
 };
 export const createPost = (content) => {

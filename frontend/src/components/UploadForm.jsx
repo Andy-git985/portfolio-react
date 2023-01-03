@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { useTheme } from '@mui/material/styles';
 import {
   Autocomplete,
   InputLabel,
@@ -15,8 +16,11 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
+  AppBar,
+  Toolbar,
 } from '@mui/material/';
-import { useTheme } from '@mui/material/styles';
+import CloseIcon from '@mui/icons-material/Close';
 import Preview from './Preview';
 import { createPost } from '../reducers/postReducer';
 
@@ -93,7 +97,27 @@ const UploadForm = () => {
         aria-labelledby="responsive-dialog-title"
       >
         <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form">
-          <DialogTitle id="responsive-dialog-title">Upload Form</DialogTitle>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <DialogTitle id="responsive-dialog-title">Upload Form</DialogTitle>
+            <Button
+              type="button"
+              onClick={() => {
+                reset();
+                setImages([]);
+              }}
+              variant="contained"
+            >
+              Reset
+            </Button>
+          </Toolbar>
           <DialogContent>
             <div>
               <TextField
@@ -168,18 +192,6 @@ const UploadForm = () => {
                     register('file').onChange(event);
                   }}
                 />
-              </Button>
-            </div>
-            <div>
-              <Button
-                type="button"
-                onClick={() => {
-                  reset();
-                  setImages([]);
-                }}
-                variant="contained"
-              >
-                Reset
               </Button>
             </div>
             <div>

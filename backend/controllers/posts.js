@@ -20,7 +20,8 @@ postsRouter.get('/', async (request, response) => {
     type: 1,
     project: 1,
   });
-  response.json(posts.order);
+  const order = posts.order.slice().reverse();
+  response.json(order);
 });
 
 postsRouter.post('/', upload.array('file', 10), async (request, response) => {
