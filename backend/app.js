@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use(passport.initialize());
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: config.CLIENT_URL,
     methods: 'GET,POST,PUT,DELETE',
     credentials: true,
   })
