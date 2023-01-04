@@ -55,15 +55,15 @@ export const MenuDesktop = ({ user }) => {
   );
 };
 
-const MenuMobileContainer = styled(Container)(() => ({
+const MenuMobileContainer = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
-  padding: '.625rem',
+  paddingTop: '.625rem',
 }));
 
 export const MenuMobile = ({ user }) => {
   return (
-    <div>
+    <Container>
       {/* extra div for now */}
       <MenuMobileContainer>
         <Link to="/">
@@ -72,6 +72,6 @@ export const MenuMobile = ({ user }) => {
         <DrawerMenu />
       </MenuMobileContainer>
       {user.loggedIn ? <Admin /> : <LoginButton />}
-    </div>
+    </Container>
   );
 };
